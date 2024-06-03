@@ -1,0 +1,121 @@
+/*
+Handru Radu, Grupa 2122, Laboratorul 12
+
+2. Creați o aplicație Java ce include 3 elemente de tip slider, prin intermediul cărora se poate seta culoarea unui pătrat
+de dimensiunea 100x100. Pătratul va fi desenat într-o componentă specifică (Canvas, etc.).
+*/
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
+
+class jPanelPatrat extends JPanel implements ChangeListener {
+    JSlider slider1;
+    JSlider slider2;
+    JSlider slider3;
+    JLabel labelPatrat;
+    private int r;
+    private int g;
+    private int b;
+    public jPanelPatrat(){
+        this.setLayout(null);
+        panelPatrat();
+    };
+    public void panelPatrat(){
+        labelPatrat = new JLabel();
+        slider1 = new JSlider(JSlider.HORIZONTAL, 0, 255, 122);
+        slider2 = new JSlider(JSlider.HORIZONTAL, 0, 255, 122);
+        slider3 = new JSlider(JSlider.HORIZONTAL, 0, 255, 122);
+
+
+        slider1.setMinorTickSpacing(10);
+        slider1.setMajorTickSpacing(60);
+        slider2.setMinorTickSpacing(10);
+        slider2.setMajorTickSpacing(60);
+        slider3.setMinorTickSpacing(10);
+        slider3.setMajorTickSpacing(60);
+
+        int width = getWidth();
+        int height = getHeight();
+
+
+        slider1.setPaintTicks(true);
+        slider2.setPaintTicks(true);
+        slider3.setPaintTicks(true);
+        slider1.setPaintLabels(true);
+        slider2.setPaintLabels(true);
+        slider3.setPaintLabels(true);
+
+        labelPatrat.setOpaque(true);
+        labelPatrat.setBackground(new Color(slider1.getValue(), slider2.getValue(), slider3.getValue()));
+        labelPatrat.setBounds(250,125, 100, 100);
+        this.add(labelPatrat);
+
+        JLabel labelR = new JLabel("R: ");
+        labelR.setBounds(20,50, 20,20);
+        this.add(labelR);
+        slider1.setBounds(35, 50, 150 , 50);
+        this.add(slider1);
+        slider1.addChangeListener(this);
+
+        JLabel labelG = new JLabel("G: ");
+        labelG.setBounds(20,150, 20,20);
+        this.add(labelG);
+        slider2.setBounds(35, 150, 150, 50);
+        this.add(slider2);
+        slider2.addChangeListener(this);
+
+        JLabel labelB = new JLabel("B: ");
+        labelB.setBounds(20,250, 20,20);
+        this.add(labelB);
+        slider3.setBounds(35, 250, 150, 50);
+        this.add(slider3);
+        slider3.addChangeListener(this);
+
+
+    }
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        if (e.getSource() == slider1)
+            r = slider1.getValue();
+        if (e.getSource() == slider2)
+            g = slider2.getValue();
+        if (e.getSource() == slider3)
+            b = slider3.getValue();
+        labelPatrat.setBackground(new Color(r, g, b));
+        repaint();
+    }
+}
+
+class FrameSlidere extends JFrame{
+    private static final int dimX = 400;
+
+    private static final int dimY = 400;
+
+    public FrameSlidere(String title){
+        super(title);
+        this.setSize(dimX, dimY);
+
+        jPanelPatrat jPanelPatrat = new jPanelPatrat();
+        this.add(jPanelPatrat);
+
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
+    }
+
+}
+
+public class Main {
+    public static void main(String[] args) {
+        new FrameSlidere("Slidere Patrat");
+    }
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,855 @@
+/*
+Handru Radu, Grupa 2122, Laboratorul 6
+
+1. Scrieti un program Java care defineste un sir de valori de tip double care vor fi citite de la tastatura. Tratati exceptia
+data de accesarea unui element cu index negativ sau mai mare decat indexul ultimului element din sir
+(ArrayIndexOutOfBoundsException). Afisati un mesaj corespunzator in momentul detectarii exceptiei. Considerati o
+matrice (cu numar de coloane fix pentru fiecare linie) si tratati exceptia posibil a aparea. Considerati si cazul in care
+matricea are numar diferit de coloane la fiecare linie.
+*/
+
+import java.lang.String;
+import java.util.Scanner;
+
+public class MyMain{
+    public static void main(String[] args){
+        Scanner intrareScanner = new Scanner(System.in);
+        System.out.println("Introduceti numarul de numere al sirului de valori: ");
+        int n = 0;
+
+        try {
+            n = intrareScanner.nextInt();
+        }
+        catch (NumberFormatException e2){
+            System.out.println("Valoarea introdusa este incorecta!!!");
+            System.exit(2);
+        }
+
+
+        System.out.println("Introduceti numerele de tip double: ");
+        double[] tab = new double[n];
+        for(int i = 0 ; i < n ; i ++){
+            try {
+                tab[i] = intrareScanner.nextDouble();
+            }
+            catch (NumberFormatException e4){
+                System.out.println("Valoarea introdusa este incorecta!!!");
+                System.exit(4);
+            }
+        }
+
+        //Element cu index negativ
+        try{
+            System.out.println("Elementul este: " + tab[-3]);
+        }
+        catch (IndexOutOfBoundsException exc1){
+            System.out.println("Elementul are indexul negativ!!!");
+        }
+        //Element cu index peste indexul maxim
+        try{
+            System.out.println("Elementul este: " + tab[n + 2]);
+        }
+        catch (IndexOutOfBoundsException exc2){
+            System.out.println("Elementul are indexul mai mare decat indexul ultimului element din sir!");
+        }
+
+
+
+
+        //Matrice
+
+        double[][] mat = {{1,2,3}, {4,5,6}, {7,8,9}, {10,11,12}};
+
+        try{
+            System.out.println("Elementul este: " + mat[-1][1]);
+        }
+        catch (IndexOutOfBoundsException exc3){
+            System.out.println("Elementul are indexul liniei negativ!!!");
+        }
+
+        try{
+            System.out.println("Elementul este: " + mat[6][1]);
+        }
+        catch (IndexOutOfBoundsException exc4){
+            System.out.println("Elementul are indexul mai mare decat indexul ultimului element");
+        }
+
+
+        //Matrice de diverese dimensiuni
+        double[][] mat1 = {{1},{1,2},{1,3,4}};
+        try{
+            System.out.println("Elementul este: " + mat1[-5][2]);
+        }
+        catch (IndexOutOfBoundsException exc5){
+            System.out.println("Elementul are indexul liniei negativ!!!");
+        }
+        try{
+            System.out.println("Elementul este: " + mat1[1][3]);
+        }
+        catch (IndexOutOfBoundsException exc6){
+            System.out.println("Elementul are indexul mai mare decat indexul ultimului element de pe aceasta linie");
+        }
+    }
+}
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 6
+
+2. Scrieți o aplicație Java care, în cadrul metodei main( ), conține o secvență de cod care poate să lanseze excepții de tip
+ArithmeticException, ArrayIndexOutOfBoundsException, NullPointerException, NumberFormatException și altele pe care
+considerați că e util să le testați. Afișați în cadrul blocurilor catch mesajul generat de aceste excepții. În blocul finally,
+afișați mesajul ”Am prins sau nu excepții”.
+*/
+
+import java.lang.String;
+import java.util.Scanner;
+
+public class MyMain{
+    public static void main(String[] args){
+        Scanner intrareScanner = new Scanner(System.in);
+        int varianta = 0;
+        System.out.println("Alegeti exceptia pe care doriti sa o observati: ");
+        System.out.println("1. ArithmeticException");
+        System.out.println("2. ArrayIndexOutOfBoundsException");
+        System.out.println("3. NumberFormatException");
+        System.out.println("4. NullPointerException");
+        System.out.println("5. StringIndexOutOfBoundsException");
+
+        try {
+            varianta = intrareScanner.nextInt();
+            if (varianta < 1 || varianta > 5) {
+                System.out.println("Valoarea nu este corecta!!");
+                System.exit(1);
+            }
+        }
+        catch (NumberFormatException e1){
+            System.out.println("Valoarea introdusa nu este un numar !!!");
+            System.exit(2);
+        }
+
+
+        try{
+            switch (varianta) {
+                case 1:
+                    //ArithmeticException
+                    double a = 275 / 0;
+
+
+                case 2:
+                    //ArrayIndexOutOfBoundsException
+                    System.out.println("Tabloul nostru are 10 elemente, introduceti un index pentru care doriti sa se faca afisarea: ");
+                    int index = intrareScanner.nextInt();
+                    int[] tab = new int[10];
+                    tab[index] = 3;
+                    System.out.println("Elementul de pe pozitia: " + index + " are valoarea: " + tab[index]);
+
+                case 3:
+                    //NumberFormatException
+                    float b = Float.parseFloat("Masina");
+
+
+                case 4:
+                    //NullPointerException
+                    String sir = null;
+                    System.out.println(sir.length());
+
+                case 5:
+                    //StringIndexOutOfBoundsException
+                    String sir2 = "Masina";
+                    char caracterIndexNegativ = sir2.charAt(-5);
+                    char caracterIndexLength = sir2.charAt(6);
+            }
+        }
+        catch (ArithmeticException e1){
+            System.out.println("A aparut o exceptie la definirea lui a, deoarece am incercat sa il definim folosind impartirea la 0 !!!");
+        }
+        catch (ArrayIndexOutOfBoundsException e2){
+            System.out.println("A aparut o exceptie la apelarea unui element din tablou, deoarece indexul introdus negativ sau mai mare decat numarul de elemente al tabloului!!! ");
+        }
+        catch (NumberFormatException e3){
+            System.out.println("A aparut o exceptie la definirea lui b, deoarece am vrut sa ii atribuim string-ul 'Masina' !!!");
+        }
+        catch (NullPointerException e4){
+            System.out.println("A aparut o exceptie la apelarea metodei length() din clasa String, deoarece string-ul nostru este null !!!!");
+        }
+        catch (StringIndexOutOfBoundsException e5){
+            System.out.println("A aparut o exceptie la atribuirea unei valori de pe o pozitie negativa sau mai mare decat length-ul unui String");
+        }
+        catch (Exception e6){
+            System.out.println("A aparut o exceptie !!!");
+        }
+        finally {
+            System.out.println("Am prins sau nu exceptii!!!");
+        }
+
+    }
+}
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 6
+
+3. Definiți un pachet care declară interfața Int1 (2 variabile întregi și o metodă numita sum( ) care returnează suma a doi
+întregi). În pachet mai există clasa Class1 (2 variabile protected de tip double, constructor, metode accesor și mutator
+pentru variabilele din clasă). În alt fișier sursă se adaugă în același pachet o nouă interfață numită Int2 (2 variabile de tip
+double și o metodă numită product( ) care returnează produsul a două valori de tip double).
+Într-un fișier sursă distinct, importați tot ce conține pachetul definit anterior și definiți o clasă numită Class2 care este
+derivată din Class1 și care implementează ambele interfețe Int1 și Int2. Instanțiați Class2 și aplicați metodele disponibile
+pentru a calcula suma și produsul unor variabile citite de la tastatură.
+
+*/
+import MyPackage1.Int2;
+import MyPackage1.Class1;
+import MyPackage1.Int1;
+import java.util.Scanner;
+
+public class Class2 extends Class1 implements Int1, Int2{
+    Class2(){
+        super();
+    }
+    Class2(double c, double d){
+        super(c, d);
+    }
+
+    @Override
+    public int sum(int a, int b){
+        return a + b;
+    }
+
+    @Override
+    public double product(double c, double d){
+        return c * d;
+    }
+
+
+    public static void main(String[] args) {
+        Scanner intrareScanner = new Scanner(System.in);
+
+        int a = 0, b = 0;
+        double c = 0, d = 0;
+
+        System.out.print("Introduceți primul număr întreg: ");
+        try {
+            a = intrareScanner.nextInt();
+        }
+        catch (NumberFormatException e1){
+            System.out.println("Valoarea introdusa este incorecta!!");
+        }
+
+        System.out.print("Introduceți al doilea număr întreg: ");
+        try {
+            b = intrareScanner.nextInt();
+        }
+        catch (NumberFormatException e1){
+            System.out.println("Valoarea introdusa este incorecta!!");
+        }
+
+        System.out.print("Introduceți prima valoare reală: ");
+        try {
+            c = intrareScanner.nextDouble();
+        }
+        catch (NumberFormatException e1){
+            System.out.println("Valoarea introdusa este incorecta!!");
+        }
+
+        System.out.print("Introduceți a doua valoare reală: ");
+        try {
+            d = intrareScanner.nextDouble();
+        }
+        catch (NumberFormatException e1){
+            System.out.println("Valoarea introdusa este incorecta!!");
+        }
+
+
+        Class2 obiect = new Class2();
+
+        System.out.println("Suma numerelor întregi: " + obiect.sum(a,b));
+        System.out.println("Produsul valorilor reale: " + obiect.product(c,d));
+    }
+}
+
+
+//Int1
+package MyPackage1;
+
+public interface Int1 {
+    int sum(int a, int b);
+}
+
+
+
+
+//Int2
+package MyPackage1;
+
+public interface Int2 {
+    double product(double c, double d);
+}
+
+
+
+//class1
+package MyPackage1;
+
+public class Class1{
+    protected double c;
+    protected double d;
+    public Class1(){
+        c = 0;
+        d = 0;
+    }
+    public Class1(double c, double d){
+        this.c = c;
+        this.d = d;
+    }
+
+    public double getC() {
+        return c;
+    }
+
+    public void setC(double c) {
+        this.c = c;
+    }
+
+    public double getD() {
+        return d;
+    }
+
+    public void setD(double d) {
+        this.d = d;
+    }
+}
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 6
+
+4. Creați o clasă derivată din Exception, numită SuperExceptie. O a doua clasă ExceptieMaiMica este derivată din
+SuperExceptie. În constructorii claselor afisați un mesaj ce indică excepția generată. În cadrul unei alte clase creați o
+metodă a( ) ce semnalizeaza (aruncă) o excepție de tip ExceptieMaiMica și o metodă b( ) ce semnalizeaza o excepție de
+tip SuperExceptie.
+În cadrul metodei main( ) apelați aceste metode și încercați să determinați tipul de excepție semnalizată, precum și dacă
+blocul catch aferent tipului de exceptie ExceptieMaiMica poate prinde o SuperExcepție.
+*/
+
+class SuperExceptie extends Exception {
+    SuperExceptie() {
+        System.out.println("S-a generat o exceptie de tip SuperExceptie!!!");
+    }
+}
+
+class ExceptieMaiMica extends SuperExceptie {
+    ExceptieMaiMica() {
+        System.out.println("S-a generat o exceptie de tip ExceptieMaiMica!!!");
+    }
+}
+
+class TestExceptii {
+    void a() throws ExceptieMaiMica {
+        throw new ExceptieMaiMica();
+    }
+
+    void b() throws SuperExceptie {
+        throw new SuperExceptie();
+    }
+}
+
+
+
+public class MyMain{
+    public static void main(String[] args){
+        TestExceptii exc = new TestExceptii();
+        try {
+            exc.a();
+        } catch (ExceptieMaiMica e) {
+            System.out.println("Exceptia ExceptieMaiMica a fost apelata si prinsa in urma throw-ului!!!");
+        }
+
+        try {
+            exc.b();
+        } catch (SuperExceptie e) {
+            System.out.println("Exceptia SuperExceptie a fost apelata si prinsa in urma throw-ului!!!");
+        }
+
+        /*
+        //Aceasta metoda nu se poate apela din cauza faptului ca Exceptia SuperExceptie nu va fi prinsa de catre catch
+        try {
+            exc.b();
+        } catch (ExceptieMaiMica e) {
+            System.out.println("Excepția SuperExceptie a fost prinsă de blocul catch pentru ExceptieMaiMica");
+        }
+        */
+
+    }
+}
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 6
+
+5. Scrieți o aplicație ce verifică dacă 3 puncte aleatoare formează un triunghi obtuzunghic (se folosește Teorema
+Cosinusului de 2(3) ori: c ^ 2 = a ^ 2 + b ^ 2 - 2  * a * b * cos(C), unde C este unghiul opus laturii c). Dacă nu este îndeplinită
+condiția, se aruncă o excepție specifică: TriunghiAscutitunghic, TriunghiDreptunghic. Dacă cele 3 puncte se află pe
+aceeași dreaptă sau dacă segmentele pe care le determină nu pot forma un triunghi, se aruncă o excepție
+TriunghiImposibil, iar în blocul catch aferent, se afișează un mesaj corespunzător și se aruncă o excepție de tip
+RuntimeException.
+*/
+
+class TriunghiAscutitunghic extends Exception{
+    TriunghiAscutitunghic(){
+        System.out.println("Triunghiul este ascutitunghic!!!");
+    }
+
+}
+
+class TriunghiDreptunghic extends Exception {
+    TriunghiDreptunghic() {
+        System.out.println("Triunghiul este dreptunghic!!!");
+    }
+}
+
+class TriunghiImposibil extends Exception {
+    TriunghiImposibil() {
+        System.out.println("Cele trei puncte nu pot forma un triunghi sau se afla pe aceeasi dreapta!!!");
+    }
+}
+
+class Triunghi{
+    private double a;
+    private double b;
+    private double c;
+
+    Triunghi(){
+        a = 0;
+        b = 0;
+        c = 0;
+    }
+    Triunghi(double a, double b, double c){
+        this.a = a;
+        this.b = b;
+        this.c = c;
+    }
+
+    public double getA() {
+        return a;
+    }
+
+    public void setA(double a) {
+        this.a = a;
+    }
+
+    public double getB() {
+        return b;
+    }
+
+    public void setB(double b) {
+        this.b = b;
+    }
+
+    public double getC() {
+        return c;
+    }
+
+    public void setC(double c) {
+        this.c = c;
+    }
+
+    void verificaTriunghi() throws TriunghiAscutitunghic, TriunghiDreptunghic, TriunghiImposibil{
+        if (a + b <= c || a + c <= b || b + c <= a) {
+            throw new TriunghiImposibil();
+        }
+
+        double cosC = (a * a + b * b - c * c) / (2 * a * b);
+        if(cosC == 0){
+            throw new TriunghiDreptunghic();
+        }
+        if(cosC < 0)
+            throw new TriunghiDreptunghic();
+    }
+}
+
+
+
+public class MyMain{
+    public static void main(String[] args){
+        Triunghi triunghi1 = new Triunghi(3, 4 ,5);
+        try{
+            triunghi1.verificaTriunghi();
+        }
+        catch (TriunghiAscutitunghic ta){
+            System.out.println("Exceptia TriunghiAscutitunghic a fost prinsa!!!");
+            throw new RuntimeException(ta);
+        }
+        catch (TriunghiDreptunghic td){
+            System.out.println("Exceptia TriunghiDreptunghic a fost prinsa!!!");
+            throw new RuntimeException(td);
+        }
+        catch (TriunghiImposibil ti){
+            System.out.println("Exceptia TriunghiImposibil a fost prinsa!!!");
+            throw new RuntimeException(ti);
+        }
+    }
+}
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 6
+
+6. Scrieți o aplicație Java ce implementează o excepție numită Saturat. Această excepție este generată atunci când
+saturația unei culori este peste valoarea 90 în spațiul HSV. Creați o metodă ce generează aleator culori în spațiul RGB și
+face conversia acestora la spațiul HSB/HSV. (https://www.cs.rit.edu/~ncs/color/t_convert.html) . Dacă după conversie,
+saturația culorii depășește valoarea 90, regenerați culoarea (In faza de testare folositi o asertiune pentru a verifica
+aceasta conditie ca si invariant intern). După 10 regenerări consecutive, dacă nu se obține o culoare nesaturată, se
+aruncă o excepție.
+*/
+import java.util.Random;
+
+class Saturat extends Throwable{
+    Saturat(){
+        super("Saturatia culorii este peste 90!!!");
+    }
+}
+
+class HSV {
+    public void convertRGBtoHSV() throws Saturat {
+        float hue;
+        float saturation;
+        float value;
+
+        int contor = 0;
+        boolean satCorecta = false;
+        contor++;
+        do {
+            Random randrgb = new Random();
+            int r = randrgb.nextInt();
+            int g = randrgb.nextInt();
+            int b = randrgb.nextInt();
+
+            float min, max, delta;
+
+            if (r <= g && r <= b)
+                min = r;
+            else if (g <= r && g <= b)
+                min = g;
+            else min = b;
+
+            if (r >= g && r >= b)
+                max = r;
+            else if (g >= r && g >= b)
+                max = g;
+            else max = b;
+
+            //value
+            value = max;
+
+
+            //saturation
+            delta = max - min;
+            if (max != 0)
+                saturation = delta / max;
+            else {
+                saturation = 0;
+                hue = -1;
+            }
+            System.out.println(saturation);
+            if(saturation <= 90)
+                satCorecta = true;
+
+            assert (saturation > 90) : "valoare gresita!!!";
+
+            //hue
+            if (r == max)
+                hue = (g - b) / delta;
+            else if (g == max)
+                hue = 2 + (b - r) / delta;
+            else
+                hue = 4 + (r - g) / delta;
+            hue *= 60;
+            if (hue < 0)
+                hue += 360;
+
+            contor++;
+        } while (contor < 11 && !satCorecta);
+
+        if(contor == 11)
+            throw new Saturat();
+        else{
+            System.out.println("Culoarea are urmatoarele valori: \nHue: " + hue + "\nSaturation: " + saturation + "\nValue: " + value);
+        }
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        HSV culoareHSV = new HSV();
+        try {
+            culoareHSV.convertRGBtoHSV();
+        }
+        catch (Saturat e1){
+            System.out.println("S-a prins exceptia Saturat!!!!");
+        }
+    }
+}
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 6
+
+7. Definiti un pachet Java numit imageProcessor care contine o clasa numita MyImage. Clasa contine toate metodele
+necesare initializarii si modificarii valorilor dintr-o matrice de pixeli de dimensiune m x n. Fiecare pixel este o instanta a
+unei alte clase numita Pixel (inclusa de asemenea in pachet) care contine 3 variabile intregi R, G si B care pot avea valori
+intre 0 si 255.
+Clasa MyImage mai contine metode pentru:
+- eliminarea pixelilor care au componentele RGB sub anumite valori primite ca parametri
+- eliminarea componentelor R G sau B din toti pixelii
+- transformarea valorilor pixelilor in tonuri de gri prin aplicarea formulei 0.21 R + 0.71 G + 0.07 B. Noile componente
+R G si B vor fi egale cu noua valoare calculata
+Nota: fiecare operatiune este cronometrata.
+Importati pachetul intr-o aplicatie Java care instantiaza clasa MyImage. Programul aloca valori aleatoare componentelor
+culorilor pixelilor. Aplicati metodele din clasa asupra obiectului creat. Afisati rezultatele si timpii de transformare.
+
+*/
+
+import imageProcessor.MyImage;
+import java.util.Scanner;
+
+public class MyMain{
+    public static void main(String[] args){
+        Scanner intrareScanner = new Scanner(System.in);
+        System.out.println("Introduceti dimensiunile matricii (m x n) : ");
+        int m = 0, n = 0;
+        try {
+            m = intrareScanner.nextInt();
+            n = intrareScanner.nextInt();
+        }
+        catch (NumberFormatException e1){
+            System.out.println("Una dintre valori este incorecta!!!!");
+        }
+        MyImage imagine = new MyImage(m,n);
+        //Afisare
+        System.out.println("Afisare initiala a matricii: ");
+        imagine.afisareMatrice();
+
+        //Variante
+        int varianta = 0;
+        System.out.println("\nIntroduceti varianta pe care o doriti: ");
+        System.out.println("1. Eliminarea lui R din Matrice");
+        System.out.println("2. Eliminarea lui G din Matrice");
+        System.out.println("3. Eliminarea lui B din Matrice");
+        System.out.println("4. Eliminarea din Matrice a pixelilor care au componentele R,G si B sub anumite valori");
+        System.out.println("5. Transformarea pixelilor in tonuri de gri");
+        varianta = intrareScanner.nextInt();
+
+        long timpStart, timpFinal;
+
+        switch (varianta) {
+            case 1:
+                //EliminareR
+                System.out.println("\nAfisarea matricii dupa eliminarea lui R");
+                timpStart = System.nanoTime();
+                imagine.eliminareR();
+                timpFinal = System.nanoTime();
+                imagine.afisareMatrice();
+
+                System.out.println("\nTimpul de transformare este : " + (timpFinal - timpStart) + " ns");
+                break;
+            case 2:
+                //EliminareG
+                System.out.println("\nAfisarea matricii dupa eliminarea lui G");
+                timpStart = System.nanoTime();
+                imagine.eliminareG();
+                timpFinal = System.nanoTime();
+                imagine.afisareMatrice();
+
+                System.out.println("\nTimpul de transformare este : " + (timpFinal - timpStart) + " ns");
+                break;
+            case 3:
+                //EliminareB
+                System.out.println("\nAfisarea matricii dupa eliminarea lui B");
+                timpStart = System.nanoTime();
+                imagine.eliminareB();
+                timpFinal = System.nanoTime();
+                imagine.afisareMatrice();
+
+                System.out.println("\nTimpul de transformare este : " + (timpFinal - timpStart) + " ns");
+                break;
+            case 4:
+                //Eliminarea elementelor sub valorile de prag
+                System.out.println("\nIntroduceti valorile de prag pentru r, g si b: ");
+                int r = 0, g = 0, b = 0;
+                try {
+                    r = intrareScanner.nextInt();
+                    g = intrareScanner.nextInt();
+                    b = intrareScanner.nextInt();
+                } catch (NumberFormatException e1) {
+                    System.out.println("Una dintre valori este incorecta!!!!");
+                }
+                System.out.println("\nAfisarea matricii dupa eliminarea elementelor care au r, g si b mai mici decat pragurile: ");
+
+                timpStart = System.nanoTime();
+                imagine.eliminarePixeli(r,g,b);
+                timpFinal = System.nanoTime();
+                imagine.afisareMatrice();
+
+                System.out.println("\nTimpul de transformare este : " + (timpFinal - timpStart) + " ns");
+                break;
+            case 5:
+                System.out.println("\nAfisarea matricii dupa transformarea elementelor in tonuri de gri: ");
+                timpStart = System.nanoTime();
+                imagine.tonuriDeGri();
+                timpFinal = System.nanoTime();
+                imagine.afisareMatrice();
+
+                System.out.println("\nTimpul de transformare este : " + (timpFinal - timpStart) + " ns");
+                break;
+        }
+    }
+}
+
+
+//MyImage.java in package-ul imageProcessor
+package imageProcessor;
+
+import java.util.Random;
+public class MyImage {
+    private int m;
+    private int n;
+    private Pixel[][] pixels;
+    public MyImage(int m, int n){
+        this.m = m;
+        this.n = n;
+        pixels = new Pixel[m][n];
+        Random randomNumber = new Random();
+
+        int red, green , blue;
+        for(int i = 0 ; i < m; i ++) {
+            for (int j = 0; j < n; j++)
+            {
+                red = randomNumber.nextInt(256);
+                green = randomNumber.nextInt(256);
+                blue = randomNumber.nextInt(256);
+                pixels[i][j] = new Pixel(red,green,blue);
+            }
+        }
+    }
+    public void eliminarePixeli(int rmin, int gmin, int bmin){
+        for(int i = 0 ; i < m; i ++) {
+            for (int j = 0; j < n; j++)
+            {
+                if(pixels[i][j].r < rmin || pixels[i][j].g < gmin || pixels[i][j].b < bmin) {
+                    pixels[i][j].r = 0;
+                    pixels[i][j].g = 0;
+                    pixels[i][j].b = 0;
+                }
+            }
+        }
+    }
+
+    public void eliminareR(){
+        for(int i = 0 ; i < m; i ++)
+            for (int j = 0; j < n; j++)
+                pixels[i][j].r = 0;
+    }
+
+    public void eliminareG(){
+        for(int i = 0 ; i < m; i ++)
+            for (int j = 0; j < n; j++)
+                pixels[i][j].g = 0;
+    }
+
+    public void eliminareB(){
+        for(int i = 0 ; i < m; i ++)
+            for (int j = 0; j < n; j++)
+                pixels[i][j].b = 0;
+    }
+
+    public void tonuriDeGri(){
+        for(int i = 0 ; i < m; i ++) {
+            for (int j = 0; j < n; j++)
+            {
+                int gri = (int)(pixels[i][j].r * 0.21 + pixels[i][j].g * 0.71 + pixels[i][j].b * 0.07);
+                pixels[i][j].r = gri;
+                pixels[i][j].g = gri;
+                pixels[i][j].b = gri;
+            }
+        }
+    }
+
+    public void afisareMatrice(){
+        for(int i = 0 ; i < m; i ++) {
+            for (int j = 0; j < n; j++)
+            {
+                System.out.print(pixels[i][j]);
+            }
+            System.out.print("\n");
+        }
+    }
+}
+
+
+
+//Pixel.java in package-ul imageProcessor
+package imageProcessor;
+
+public class Pixel {
+    protected int r;
+    protected int g;
+    protected int b;
+    Pixel(){
+        r = 0;
+        g = 0;
+        b = 0;
+    }
+    Pixel(int r, int g, int b){
+        this.r = r;
+        this.g = g;
+        this.b = b;
+    }
+    @Override
+    public String toString(){
+        return "(" + r + "," + g + "," + b + ")   ";
+    }
+}
+
+
+
+
+

@@ -1,0 +1,162 @@
+/*
+Handru Radu, Grupa 2122, Laboratorul 2
+
+2. Scrieti o aplicatie Java in care cititi de la tastatura o valoare intreaga si se afiseaza factorialul
+numarului citit.
+*/
+import java.util.Scanner;
+
+public class Main {
+    private static Scanner numar;
+
+    public static void main(String[] args){
+        numar = new Scanner(System.in);
+        int n;
+        System.out.print("Introduceti un numar intreg: ");
+        n = numar.nextInt();
+
+        int fact = 1;
+        for(int i = 1; i <= n ; i ++)
+            fact *= i;
+
+        System.out.println("Factorialul numarului este = " + fact );
+    }
+}
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 2
+
+3. Scrieti o aplicatie Java in care se citesc de la tastatura 2 valori intregi si se afiseaza cel mai
+mare divizor comun al numerelor.
+*/
+
+import java.util.Scanner;
+
+public class Main {
+    private static Scanner numar;
+
+    public static void main(String[] args){
+        numar = new Scanner(System.in);
+        int n, m;
+        System.out.print("Introduceti un numar intreg: ");
+        n = numar.nextInt();
+        System.out.print("Introduceti un numar intreg: ");
+        m = numar.nextInt();
+
+        while(m != 0)
+        {
+            int r = n % m;
+            n = m;
+            m = r;
+        }
+
+        int cmmdc = n;
+
+        System.out.println("Cmmdc-ul numerelor este = " + cmmdc);
+
+    }
+}
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 2
+
+4. Scrieti o aplicatie Java in care cititi de la tastatura un numar intreg si afisati toti divizorii
+numarului respectiv.
+*/
+
+import java.util.Scanner;
+
+public class Main {
+    private static Scanner numar;
+
+    public static void main(String[] args){
+        numar = new Scanner(System.in);
+        int n;
+        System.out.print("Introduceti un numar intreg: ");
+        n = numar.nextInt();
+
+        System.out.println("Divizorii numarului " + n + " : ");
+        for(int i = 1; i <= n ; i ++)
+            if(n % i == 0)
+                System.out.println(i);
+
+    }
+}
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 2
+
+5. Scrieti o aplicatie Java in care cititi de la tastatura mai multe numere intregi si verificati daca
+sunt numere prime. Numarul de valori citite este preluat de la tastatura sau din linia de
+comanda.
+*/
+
+import java.io.DataInputStream;
+import java.lang.String;
+import java.io.IOException;
+
+public class Main {
+    @SuppressWarnings("deprecation")
+
+    public static void main(String[] args){
+
+        String Sn = null;
+        DataInputStream citire = new DataInputStream(System.in);
+        System.out.print("Introduceti numarul de numere: ");
+        System.out.flush();
+
+        try{
+            Sn = citire.readLine();
+        }
+        catch(IOException ioe){
+            System.out.println(ioe.toString());
+            System.exit(1);
+        }
+
+        int n = Integer.parseInt(Sn);
+
+        System.out.println("Introduceti numerele: ");
+        System.out.flush();
+
+        int[] sir = new int[n];
+
+        for(int i = 0; i < n ; i ++){
+            Sn = null;
+            try{
+                Sn = citire.readLine();
+            }
+            catch(IOException ioe){
+                System.out.println(ioe.toString());
+                System.exit(1);
+            }
+
+            sir[i] = Integer.parseInt(Sn);
+
+        }
+
+        System.out.println("Numerele prime sunt: ");
+        System.out.flush();
+
+        for(int i = 0; i < n ; i ++)
+            if(prim(sir[i]))
+                System.out.println(sir[i]);
+
+    }
+
+    public static boolean prim(int a){
+        for(int i = 2 ; i * i <= a; i++)
+            if(a % i == 0)
+                return false;
+        return true;
+    }
+
+}

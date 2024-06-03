@@ -1,0 +1,543 @@
+/*
+Handru Radu, Grupa 2122, Laboratorul 10
+
+1. Scrieți o aplicație de tip Frame în care afișați într-un Panel numele vostru și grupa din care faceți parte. Textul va fi de
+culoare albastră și centrat atât pe orizontală, cât și pe verticală, ținând cont de dimensiunea panelului.
+*/
+
+import java.awt.*;
+import java.awt.Color;
+import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Panel;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
+class MyFrame extends Frame implements WindowListener{
+    public MyFrame(String s){
+        super(s);
+        setSize(300, 300);
+        addWindowListener(this);
+        setVisible(true);
+    }
+    @Override
+    public void windowOpened(WindowEvent openedEvent){
+    }
+    @Override
+    public void windowClosing(WindowEvent closingEvent){
+        System.exit(0);
+    }
+    @Override
+    public void windowClosed(WindowEvent e) {}
+    @Override
+    public void windowIconified(WindowEvent e) { }
+    @Override
+    public void windowDeiconified(WindowEvent e) { }
+    @Override
+    public void windowActivated(WindowEvent e) { }
+    @Override
+    public void windowDeactivated(WindowEvent e) { }
+}
+
+class PanelPersoana extends Panel{
+    public void paint(Graphics g) {
+        String numePersoana = "Handru Radu, 2122";
+        Font font = new Font("Serif", Font.PLAIN, 18);
+        g.setFont(font);
+
+        int width = getWidth();
+        int height = getHeight();
+        g.setColor(Color.blue);
+        g.drawString(numePersoana,(width-g.getFontMetrics().stringWidth(numePersoana))/2, (height-g.getFontMetrics().getHeight())/2);
+    }
+}
+
+public class AWTPanel {
+    public static void main(String[] args) {
+        MyFrame frame = new MyFrame("Nume si Grupa");
+        frame.add(new PanelPersoana());
+    }
+}
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 10
+
+2. Scrieți o aplicație de tip Frame care va desena într-un Canvas un cerc de culoare roșie tangent la dimensiunea cea mai
+mică (înălțime, lățime) a componentei Canvas.
+*/
+
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+class CanvasCerc extends Canvas{
+    private static final int dimensiuneX = 400;
+    private static final int dimensiuneY = 400;
+
+    CanvasCerc(){
+        setSize(new Dimension(dimensiuneX, dimensiuneY));
+        setBackground(Color.CYAN);
+    }
+
+    @Override
+    public void paint(Graphics g) {
+        g.setColor(Color.RED);
+
+        int raza = 100;
+        int width = this.getWidth();
+        int height = this.getHeight();
+        if(width < height) {
+            g.drawOval(0, 10, raza, raza);
+        }
+        else if(width > height) {
+            g.drawOval(10, 0, raza, raza);
+        }
+        else g.drawOval(0 , 0 ,raza, raza);
+    }
+}
+
+class ExitListener extends WindowAdapter {
+    @Override
+    public void windowClosing(WindowEvent event) {
+        System.exit(0);
+    }
+}
+
+class FrameCerc extends Frame{
+    private static final int dimX = 600;
+    private static final int dimY = 600;
+    CanvasCerc canvasCerc;
+    FrameCerc(String title){
+        super(title);
+        setSize(dimX,dimY);
+        setLayout(new FlowLayout());
+        canvasCerc = new CanvasCerc();
+        add(canvasCerc);
+        this.addWindowListener(new ExitListener());
+        setVisible(true);
+    }
+}
+
+public class AWTPanel {
+    public static void main(String[] args) {
+        FrameCerc frameCerc = new FrameCerc("Cerc rosu");
+    }
+}
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 10
+
+3. Scrieți o aplicație de tip Frame ce afișează o imagine stocată local sub care este afișat și numele fișierului din care
+provine, cu un font stabilit în prealabil și o culoare creată printr-o combinație de trei valori întregi (reprezentând
+cantitățile de roșu, verde și albastru).
+*/
+
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.io.File;
+import javax.imageio.ImageIO;
+
+class CanvasImagine extends Canvas{
+    private static final int dimensiuneX = 400;
+    private static final int dimensiuneY = 400;
+    CanvasImagine() {
+        setSize(new Dimension(dimensiuneX, dimensiuneY));
+        setBackground(Color.CYAN);
+    }
+
+    @Override
+    public void paint(Graphics g) {
+        Font font = new Font("TimesRoman", Font.PLAIN, 11);
+        g.setFont(font);
+
+        Color culoare = new Color(125,25,100);
+        g.setColor(culoare);
+
+        String Locatie = "D:\\Probleme Programare\\Fotografie.jpg";
+
+        FontMetrics fontMetrics = g.getFontMetrics(font);
+        int dimX = (dimensiuneX - fontMetrics.stringWidth(Locatie))/2;
+
+        Image image;
+        try{
+            image = ImageIO.read(new File("D:\\Probleme Programare\\Fotografie.jpg"));
+            g.drawImage(image, getWidth()/4, getHeight()/8, (getWidth())/2, (getHeight())/2, null);
+        }
+        catch (IOException e){
+            System.out.println("Exceptie imagine!!!");
+            System.exit(1);
+        }
+
+        g.drawString(Locatie, dimX, getHeight() - getHeight()/3);
+    }
+}
+
+class ExitListener extends WindowAdapter {
+    @Override
+    public void windowClosing(WindowEvent event) {
+        System.exit(0);
+    }
+}
+
+class FrameImagine extends Frame{
+    private static final int dimX = 500;
+    private static final int dimY = 500;
+    CanvasImagine canvasImagine;
+
+    FrameImagine(String title){
+        super(title);
+        setLayout(new FlowLayout());
+        canvasImagine = new CanvasImagine();
+        add(canvasImagine);
+        this.addWindowListener(new ExitListener());
+        setSize(dimX,dimY);
+        setVisible(true);
+    }
+}
+
+
+public class AWTPanel {
+    public static void main(String[] args) {
+        new FrameImagine("Imagine");
+    }
+}
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 10
+
+4. Scrieți o aplicație de tip Frame ce afișează o miră de televiziune. Mira va conține minim 10 nivele de gri și culorile de
+bază: roșu, verde, albastru, galben, cyan și magenta. Mira va acoperi întreaga dimensiune a componentei în care se face
+desenarea.
+*/
+
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+class ExitListener extends WindowAdapter {
+    @Override
+    public void windowClosing(WindowEvent event) {
+        System.exit(0);
+    }
+}
+
+class PanelMira extends Panel{
+    public PanelMira(){}
+
+    public void paint(Graphics g){
+        int width = getWidth();
+        int height = getHeight();
+
+        //Partea superioara
+        g.setColor(new Color(192,192,192));
+        g.drawRect(0,0, width/8,height*2/3);
+        g.fillRect(0,0, width/8,height*2/3);
+        g.setColor(new Color(192,192,0));
+        g.drawRect(width/8,0, width/8,height*2/3);
+        g.fillRect(width/8,0, width/8,height*2/3);
+        g.setColor(new Color(0,192,192));
+        g.drawRect(2 * width/8,0, width/8,height*2/3);
+        g.fillRect(2 * width/8,0, width/8,height*2/3);
+        g.setColor(new Color(0,192,0));
+        g.drawRect(3 * width/8,0, width/8,height*2/3);
+        g.fillRect(3 * width/8,0, width/8,height*2/3);
+        g.setColor(new Color(192,0,192));
+        g.drawRect(4 * width/8,0, width/8,height*2/3);
+        g.fillRect(4 * width/8,0, width/8,height*2/3);
+        g.setColor(new Color(192,0,0));
+        g.drawRect(5 * width/8,0, width/8,height*2/3);
+        g.fillRect(5 * width/8,0, width/8,height*2/3);
+        g.setColor(new Color(0,0,192));
+        g.drawRect(6 * width/8,0, width/8,height*2/3);
+        g.fillRect(6 * width/8,0, width/8,height*2/3);
+        g.setColor(new Color(169, 169, 169));
+        g.drawRect(7 * width/8,0, width/8,height*2/3);
+        g.fillRect(7 * width/8,0, width/8,height*2/3);
+
+        //Partea Mediana
+        g.setColor(new Color(0,0,192));
+        g.drawRect(0,height*2/3, width/8,height/12);
+        g.fillRect(0,height*2/3, width/8,height/12);
+        g.setColor(new Color(19,19,19));
+        g.drawRect(width/8,height*2/3, width/8,height/12);
+        g.fillRect(width/8,height*2/3, width/8,height/12);
+        g.setColor(new Color(192,0,192));
+        g.drawRect(2 * width/8,height*2/3, width/8,height/12);
+        g.fillRect(2 * width/8,height*2/3, width/8,height/12);
+        g.setColor(new Color(54, 69, 79));
+        g.drawRect(3 * width/8,height*2/3, width/8,height/12);
+        g.fillRect(3 * width/8,height*2/3, width/8,height/12);
+        g.setColor(new Color(128, 128, 128));
+        g.drawRect(3 * width/8,height*2/3, width/8,height/12);
+        g.fillRect(3 * width/8,height*2/3, width/8,height/12);
+        g.setColor(new Color(19,19,19));
+        g.drawRect(4 * width/8,height*2/3, width/8,height/12);
+        g.fillRect(4 * width/8,height*2/3, width/8,height/12);
+        g.setColor(new Color(132, 136, 132));
+        g.drawRect(5 * width/8,height*2/3, width/8,height/12);
+        g.fillRect(5 * width/8,height*2/3, width/8,height/12);
+        g.setColor(new Color(19,19,19));
+        g.drawRect(6 * width/8,height*2/3, width/8,height/12);
+        g.fillRect(6 * width/8,height*2/3, width/8,height/12);
+        g.setColor(new Color(112, 128, 144));
+        g.drawRect(7 * width/8,height*2/3, width/8,height/12);
+        g.fillRect(7 * width/8,height*2/3, width/8,height/12);
+
+        //Partea inferioara
+        g.setColor(new Color(0,33,76));
+        g.drawRect(0,height*2/3 + height/12, width/8,height - (height * 2 / 3) - (height/12));
+        g.fillRect(0,height*2/3 + height/12, width/8,height - (height * 2 / 3) - (height/12));
+        g.setColor(new Color(132, 136, 132));
+        g.drawRect(width/8,height*2/3 + height/12, width/8,height - (height * 2 / 3) - (height/12));
+        g.fillRect(width/8,height*2/3 + height/12, width/8,height - (height * 2 / 3) - (height/12));
+        g.setColor(new Color(255,255,255));
+        g.drawRect(2 * width/8,height*2/3 + height/12, width/8,height - (height * 2 / 3) - (height/12));
+        g.fillRect(2 * width/8,height*2/3 + height/12, width/8,height - (height * 2 / 3) - (height/12));
+        g.setColor(new Color(50,0,106));
+        g.drawRect(3 * width/8,height*2/3 + height/12, width/8,height - (height * 2 / 3) - (height/12));
+        g.fillRect(3 * width/8,height*2/3 + height/12, width/8,height - (height * 2 / 3) - (height/12));
+        g.setColor(new Color(55, 55, 55));
+        g.drawRect(4 * width/8,height*2/3 + height/12, width/8,height - (height * 2 / 3) - (height/12));
+        g.fillRect(4 * width/8,height*2/3 + height/12, width/8,height - (height * 2 / 3) - (height/12));
+        g.setColor(new Color(192,192,192));
+        g.drawRect(5 * width/8,height*2/3 + height/12, width/8,height - (height * 2 / 3) - (height/12));
+        g.fillRect(5 * width/8,height*2/3 + height/12, width/8,height - (height * 2 / 3) - (height/12));
+        g.setColor(new Color(92, 92, 92));
+        g.drawRect(6 * width/8,height*2/3 + height/12, width/8,height - (height * 2 / 3) - (height/12));
+        g.fillRect(6 * width/8,height*2/3 + height/12, width/8,height - (height * 2 / 3) - (height/12));
+        g.setColor(new Color(45, 45, 45));
+        g.drawRect(7 * width/8,height*2/3 + height/12, width/8,height - (height * 2 / 3) - (height/12));
+        g.fillRect(7 * width/8,height*2/3 + height/12, width/8,height - (height * 2 / 3) - (height/12));
+    }
+}
+
+class FrameMira extends Frame{
+    private static final int dimX = 500;
+    private static final int dimY = 500;
+
+    FrameMira(String title){
+        super(title);
+        setSize(dimX,dimY);
+        this.addWindowListener(new ExitListener());
+        add(new PanelMira());
+        setVisible(true);
+    }
+}
+
+
+public class AWTPanel{
+    public static void main(String[] args) {
+        new FrameMira("Mira Televiziune");
+    }
+}
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 10
+
+5. Scrieți o aplicație Java de tip Frame care desenează un cerc colorat în toate culorile posibile. Se va începe cu culoarea
+roșie, tranzițiile dintre culori trebuie să fie line, iar cercul este redesenat pe măsură ce culorile sunt generate.
+*/
+
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+class ExitListener extends WindowAdapter {
+    @Override
+    public void windowClosing(WindowEvent event) {
+        System.exit(0);
+    }
+}
+
+class PanelCerc extends Panel{
+    public PanelCerc(){}
+
+    public void paint(Graphics g){
+        int width = getWidth();
+        int height = getHeight();
+        try {
+            Thread.sleep(50);
+            for (int r = 255; r >= 0; r-=10) {
+                try {
+                    Thread.sleep(40);
+                    for (int green = 0; green <= 255; green+=10)
+                        for (int b = 0; b <= 255; b+=10) {
+                            try {
+                                Thread.sleep(25);
+                                g.setColor(new Color(r, green, b));
+                                g.drawOval(0, 0, width, height);
+                                g.fillOval(0, 0, width, height);
+                            } catch (InterruptedException e3) {
+                                System.exit(3);
+                            }
+                        }
+                } catch (InterruptedException e2) {
+                    System.exit(2);
+                }
+            }
+        }
+        catch (InterruptedException e1){
+            System.exit(1);
+        }
+    }
+}
+
+class FrameMira extends Frame{
+    private static final int dimX = 500;
+    private static final int dimY = 500;
+
+    FrameMira(String title){
+        super(title);
+        setSize(dimX,dimY);
+        this.addWindowListener(new ExitListener());
+        add(new PanelCerc());
+        setVisible(true);
+    }
+}
+
+
+public class AWTPanel{
+    public static void main(String[] args) {
+        new FrameMira("Mira Televiziune");
+    }
+}
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 10
+
+6. Creați o aplicație Java de tip Frame ce desenează o mașină schematică. Folosiți culori diferite pentru mașină, roți și
+text.
+*/
+
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+class ExitListener extends WindowAdapter {
+    @Override
+    public void windowClosing(WindowEvent event) {
+        System.exit(0);
+    }
+}
+
+class PanelMasina extends Panel{
+    public PanelMasina(){}
+
+    public void paint(Graphics g){
+        int width = getWidth();
+        int height = getHeight();
+
+        //Caroserie
+        g.setColor(new Color(252,136,1));
+        g.drawRect(width/4 - 25,height/3 + 20,width/2 + 50, height/5);
+        g.fillRect(width/4 - 25,height/3 + 20,width/2 + 50, height/5);
+
+        //Caucicuri
+        g.setColor(new Color(50,50,50));
+        g.drawOval(width/2 - width/4,height/2,width/8, height/8);
+        g.fillOval(width/2 - width/4,height/2,width/8, height/8);
+        g.drawOval(width/2 + width/8,height/2,width/8, height/8);
+        g.fillOval(width/2 + width/8,height/2,width/8, height/8);
+
+        //Jenti
+        g.setColor(new Color(230,230,230));
+        g.drawOval((width/2 - width/4)+8,(height/2)+8,width/8 - 16, height/8 - 16);
+        g.fillOval((width/2 - width/4)+8,(height/2)+8,width/8 - 16, height/8 - 16);
+        g.drawOval((width/2 + width/8)+8,(height/2)+8,width/8 - 16, height/8 - 16);
+        g.fillOval((width/2 + width/8)+8,(height/2)+8,width/8 - 16, height/8 - 16);
+
+        //Far
+        g.setColor(new Color(200,200,200));
+        g.drawRect(width/4 - 22,height/3 + 23,30, 30);
+        g.fillRect(width/4 - 22,height/3 + 23,30, 30);
+
+        //Stop
+        g.setColor(new Color(255,0,0));
+        g.drawRect(width/2 + width/8 + width/9,height/3 + 23, 30, 30);
+        g.fillRect(width/2 + width/8 + width/9,height/3 + 23,30, 30);
+
+        //Plafon
+        g.setColor(new Color(252,136,1));
+        g.drawRect(width/3,height/4,width/3, height/5);
+        g.fillRect(width/3,height/4,width/3, height/5);
+
+        //Geam
+        g.setColor(new Color(255,255,255));
+        g.drawRect(width/3 + width/50,height/4 + 5,width/8, height/9);
+        g.fillRect(width/3 + width/50,height/4 + 5,width/8, height/9);
+
+        //Usa
+        g.setColor(new Color(170,170,170));
+        g.drawRect(width/4 + width/7,height/3 + 25,width/8, height/6);
+        g.fillRect(width/4 + width/7,height/3 + 25,width/8, height/6);
+
+        //Clanta
+        g.setColor(new Color(0,0,0));
+        g.drawRect(width/2,height/3 + 28,10, 5);
+        g.fillRect(width/2,height/3 + 28,10, 5);
+
+        //Denumire masina
+        g.setColor(new Color(120,13,20));
+        String denumireMasina = "BMW e60";
+        g.setFont(new Font("Serif", Font.PLAIN, 15));
+        g.drawString("BMW e60", (width - g.getFontMetrics().stringWidth(denumireMasina))/2,height/6 - g.getFontMetrics().getHeight());
+    }
+}
+
+class FrameMasina extends Frame{
+    private static final int dimX = 500;
+    private static final int dimY = 500;
+
+    FrameMasina(String title){
+        super(title);
+        setSize(dimX,dimY);
+        this.addWindowListener(new ExitListener());
+        add(new PanelMasina());
+        setVisible(true);
+    }
+}
+
+
+public class AWTPanel{
+    public static void main(String[] args) {
+        new FrameMasina("Masina");
+    }
+}
+
+
+

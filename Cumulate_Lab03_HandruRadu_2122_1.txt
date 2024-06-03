@@ -1,0 +1,484 @@
+/*
+Handru Radu, Grupa 2122, Laboratorul 3
+
+1. Scrieti o aplicatie Java in care cititi o valoare intreaga. In cazul in care valoarea intreaga este cuprinsa intre 1-12
+sa se afiseze luna corespunzatoare. Considerati cazul in care valoarea introdusa este un sir de caractere si daca
+aceasta corespunde unei luni din an afisati valoarea numerica a lunii.
+*/
+import java.io.*;
+import java.lang.String;
+import java.io.IOException;
+
+public class Main {
+    public static void main(String[] args) {
+
+        BufferedReader buff = new BufferedReader(new InputStreamReader(System.in));
+        String Intr = null;
+
+        System.out.print("Introduceti o valoare intreaga sau o luna a anului: ");
+        System.out.flush();
+
+        try {
+            Intr = buff.readLine();
+        }
+        catch (IOException ioe)
+        {
+            System.out.println("Nu ati introdus o valoare valida!! ");
+            System.exit(1);
+        }
+
+        String[] Months =  {"Ianuarie", "Februarie","Martie", "Aprilie", "Mai", "Iunie", "Iulie", "August", "Septembrie", "Octombrie","Noiembrie","Decembrie"};
+        boolean month = false;
+
+        for(int i = 0 ; i < 12; i ++)
+            if(Intr.equalsIgnoreCase(Months[i]))
+            {
+                System.out.println("Luna este: " + (i + 1));
+                month = true;
+                break;
+            }
+
+        try {
+            if (!month) {
+                int intreg = Integer.parseInt(Intr);
+                if (intreg >= 1 && intreg <= 12) {
+                    for (int i = 0; i < 12; i++)
+                        if (intreg == i + 1)
+                            System.out.println("Luna cu numarul " + intreg + " este " + Months[i]);
+                }
+                else {
+                    System.out.println("Numarul este incorect!!!");
+                    System.exit(2);
+                }
+            }
+        }
+        catch(NumberFormatException conditie){
+            System.out.println("Sirul este incorect!");
+            System.exit(3);
+        }
+    }
+}
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 3
+
+2. Cititi un sir de caractere de la intrarea standard. Transformati sirul intr-un tablou de caractere. Cautati in acest
+tablou un caracter specificat in program. Afisati numarul de aparitii.
+*/
+import java.io.*;
+import java.lang.String;
+import java.io.IOException;
+
+public class Main {
+    public static void main(String[] args) {
+
+
+        BufferedReader buff = new BufferedReader(new InputStreamReader(System.in));
+        String Intrare=null;
+
+        System.out.print("Introduceti un String: ");
+        System.out.flush();
+
+        try {
+            Intrare = buff.readLine();
+        }
+        catch (IOException ioe)
+        {
+            System.exit(1);
+        }
+
+        char[] Caract = new char[Intrare.length()];
+        for(int i = 0; i < Intrare.length(); i++)
+            Caract[i] = Intrare.charAt(i);
+
+
+        //Citirea si initializarea caracterului
+        System.out.println("Introduceti un caracter: ");
+        char caracter;
+        try{
+            Intrare = buff.readLine();
+            if(Intrare.length() > 1) {
+                System.out.println("Nu ati introdus un caracter ci un String!!");
+                System.exit(1);
+            }
+        }
+        catch(IOException ioe){
+            System.exit(1);
+        }
+        caracter = Intrare.charAt(0);
+
+
+        //Nr de aparitii ale caracterului
+        int counter = 0;
+        for(int i = 0 ; i < Caract.length; i++)
+        {
+            if(Caract[i] == caracter)
+                counter++;
+        }
+
+        System.out.println("Caracterul " + caracter + " apare in Sirul de caractere de " + counter + " ori");
+    }
+}
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 3
+
+3. Pornind de la problema precedenta, copiati primele 3 caractere din sir intr-un alt tablou si afisati rezultatul
+obtinut (folositi metoda arraycopy() din clasa System).
+*/
+import java.io.*;
+import java.lang.String;
+import java.io.IOException;
+
+public class Main {
+    public static void main(String[] args) {
+        BufferedReader buff = new BufferedReader(new InputStreamReader(System.in));
+        String intrare=null;
+
+        System.out.print("Introduceti un String: ");
+        System.out.flush();
+
+        try {
+            intrare = buff.readLine();
+        }
+        catch (IOException ioe)
+        {
+            System.exit(1);
+        }
+
+        char[] sir = intrare.toCharArray();
+
+        if(intrare.length() >= 3) {
+            char[] caractere = new char[3];
+            System.arraycopy(sir,0,caractere,0,3);
+            for(int i = 0 ; i < caractere.length; i++)
+                System.out.print(caractere[i] + " ");
+
+        }
+        else {
+            System.out.println("Sirul nu are lungimea mai mare sau egala cu 3");
+            System.exit(1);
+        }
+
+    }
+}
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 3
+
+4. Scrieti o aplicatie Java care defineste o valoare intreaga si apoi afiseaza reprezentarea ei binară, octală și
+hexazecimală. Scrieți metode de conversie a valorii citite în diferite baze de numeratie.
+*/
+import java.io.*;
+import java.lang.String;
+import java.io.IOException;
+
+public class Main {
+    public static void main(String[] args) {
+        BufferedReader buff = new BufferedReader(new InputStreamReader(System.in));
+        String intrare = null;
+
+        System.out.print("Introduceti un intreg: ");
+        System.out.flush();
+
+        try {
+            intrare = buff.readLine();
+        }
+        catch (IOException ioe)
+        {
+            System.exit(1);
+        }
+
+        int numar = Integer.parseInt(intrare);
+        System.out.println(numar);
+
+        System.out.println("Numarul in binar este: " + Integer.toBinaryString(~numar));
+        System.out.println("Numarul in octal este: " + Integer.toOctalString(~numar));
+        System.out.println("Numarul in hexa este: 0x" + Integer.toHexString(~numar));
+
+    }
+}
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 3
+
+5. Implementati algoritmii cunoscuti de ordonare a sirurilor numerice (bubble sort, insertion sort, quick sort, etc.)
+si aplicati-i asupra unui sir de valori intregi citite de la tastatura.
+*/
+import java.lang.String;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner in = new Scanner(System.in);
+        int n = 0;
+
+        try{
+            System.out.println("Introduceti numarul de elemente al array-ului: ");
+            System.out.flush();
+            n = in.nextInt();
+        }
+        catch(InputMismatchException e1){
+            System.out.println("Valoare incorecta!!!");
+            System.exit(1);
+        }
+
+
+        System.out.println("Introduceti numerele : ");
+        int[] arr = new int[n];
+        for(int i = 0 ; i < arr.length; i ++){
+            arr[i] = in.nextInt();
+        }
+
+
+        System.out.println("Choose a algorithm to sort the array: ");
+        System.out.println("1. Bubble Sort");
+        System.out.println("2. Insertion Sort");
+        int type_of_sort = in.nextInt();
+
+
+        if(type_of_sort == 1) {
+            bubbleSort(arr.length, arr);
+            System.out.println("The values of the array after Bubble Sort: ");
+            for (int i = 0; i < arr.length; i++)
+                System.out.print(arr[i] + " ");
+        }
+        else if(type_of_sort == 2) {
+            insertionSort(arr.length, arr);
+            System.out.println("The values of the array after Insertion Sort: ");
+            for (int i = 0; i < arr.length; i++)
+                System.out.print(arr[i] + " ");
+        }
+
+    }
+    public static void bubbleSort(int n, int[] arr){
+        for(int i = 0 ; i < n - 1; i++)
+            for(int j = i + 1; j < n ; j++)
+                if(arr[i] > arr[j]){
+                    int swapper = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = swapper;
+                }
+    }
+
+    public static void insertionSort(int n, int[] arr){
+        for (int i = 1; i < n; i++) {
+            int swapper = arr[i];
+            int j = i - 1;
+            while (j >= 0 && arr[j] > swapper) {
+                arr[j + 1] = arr[j];
+                j--;
+            }
+            arr[j + 1] = swapper;
+        }
+    }
+}
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 3
+
+6. Scrieti un program Java care genereaza 2 valori aleatoare si efectueaza asupra lor cateva operatii matematice
+*/
+import java.lang.String;
+import java.util.Random;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Random rand = new Random();
+        int nr1 = rand.nextInt(1000);
+        int nr2 = rand.nextInt(1000);
+
+        System.out.println("Numerele sunt: " + nr1 + " " + nr2);
+        float impartire = -1;
+
+        int sum = nr1 + nr2;
+        int dif = nr1 - nr2;
+        float inmultire = nr1 * nr2;
+        try {
+            impartire = (float) nr1 / nr2;
+        }
+        catch (ArithmeticException e1){
+            System.out.println("Impartirea la 0");
+            System.exit(1);
+        }
+        System.out.println("Suma numerelor este: " + sum);
+        System.out.println("Diferenta numerelor este: " + dif);
+        System.out.println("Inmultirea numerelor este: " + inmultire);
+        System.out.println("Impartirea numerelor este: " + impartire);
+    }
+}
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 3
+
+7. Sa se citeasca de la consola o valoare intreaga mai mare decat 16.777.216. Sa se foloseasca masti pe biti pentru
+a izola fiecare din cei 4 octeti ai valorii citite. Afisati atat valoarea initiala cat si valorile izolate in zecimal, binar si
+hexazecimal.
+*/
+import java.lang.String;
+import java.util.Scanner;
+
+public class Main {
+    private static Scanner in;
+    public static void main(String[] args) {
+        in = new Scanner(System.in);
+
+        System.out.println("Introduceti o valoare intreaga: ");
+        System.out.flush();
+
+        int n;
+        n = in.nextInt();
+
+        if(n <= 16777216){
+            System.out.println("Valoarea este incorecta! ");
+            System.exit(1);
+        }
+
+        //masca va fi numarul maxim pe 8 biti
+        int masca = 255;
+
+        int octet1 = (n >> 24) & masca;
+        int octet2 = (n >> 16) & masca;
+        int octet3 = (n >> 8) & masca;
+        int octet4 = n & masca;
+
+
+        System.out.println("Valoarea initiala este: " + n);
+        System.out.println("Octetul 1 este: " + octet1 + "    binar: " + Integer.toBinaryString(octet1) + "    hexa: " + Integer.toHexString(octet1));
+        System.out.println("Octetul 2 este: " + octet2 + "    binar: " + Integer.toBinaryString(octet2) + "    hexa: " + Integer.toHexString(octet2));
+        System.out.println("Octetul 3 este: " + octet3 + "    binar: " + Integer.toBinaryString(octet3) + "    hexa: " + Integer.toHexString(octet3));
+        System.out.println("Octetul 4 este: " + octet4 + "    binar: " + Integer.toBinaryString(octet4) + "    hexa: " + Integer.toHexString(octet4));
+    }
+}
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 3
+
+8. Sa se citeasca de la tastatura elementele unei matrice de valori intregi cu m linii (m preluat din linia de
+comanda). Pentru fiecare linie numarul de elemente va creste cu 1 fata de linia precedenta, prima linie avand
+doar un element.
+Sa se implementeze metodele care:
+− afiseaza matricea linie cu linie, apoi coloana cu coloana;
+− elimina din matrice (egalizeaza cu 0) valorile care nu sunt cuprinse intre doua limite specificate
+− afiseaza vecinii existenti ai unui element a carui indecsi sunt trimisi ca parametri
+*/
+import java.lang.String;
+import java.util.Scanner;
+import java.io.Console;
+
+
+public class Main {
+    public static void main(String[] args) {
+        //Citirea numarului de linii
+
+        Console in2 = System.console();
+
+        System.out.println("Introduceti numarul de linii: ");
+        System.out.flush();
+
+        String nr_linii = in2.readLine();
+        int m = Integer.parseInt(nr_linii);
+
+
+
+        Scanner intrare = new Scanner(System.in);
+
+        int[][] mat = new int[m][m];
+
+        System.out.println("Introduceti valorile matricii: ");
+        for (int i = 0; i < m; i++) {
+            for(int j = 0; j < i + 1; j ++){
+                mat[i][j] = intrare.nextInt();
+            }
+        }
+
+        afisLinCol(m,mat);
+
+        eliminareVal(m,mat);
+        System.out.println("\nMatricea dupa eliminarea elementelor din afara limitelor este: ");
+        afisLinCol(m,mat);
+
+        int lin, col;
+        System.out.print("\nIntroduceti indecsi unui element din matrice (i  j) : ");
+        lin = intrare.nextInt();
+        col = intrare.nextInt();
+        afisVecini(mat,lin,col);
+    }
+
+    public static void afisLinCol(int m, int[][] mat){
+        //Linie cu linie
+        System.out.println("\nAfisare linie cu linie a matricii: ");
+        for (int i = 0; i < m; i++) {
+            System.out.println("\nElementele de pe linia " + (i + 1));
+            for (int j = 0; j < m; j++) {
+                System.out.print(mat[i][j] + " ");
+            }
+        }
+
+        //Coloana cu coloana
+        System.out.println("\n\nAfisare coloana cu coloana a matricii: ");
+        for (int j = 0; j < m; j++) {
+            System.out.println("\nElementele de pe coloana " + (j + 1));
+            for (int i = 0; i < m; i++) {
+                System.out.print(mat[i][j] + " ");
+            }
+        }
+    }
+
+    public static void eliminareVal(int m, int[][] mat){
+        int limitaSuperioara = 20;
+        int limitaInferioara = 3;
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < m; j++) {
+                if(mat[i][j] < limitaInferioara || mat[i][j] > limitaSuperioara)
+                    mat[i][j] = 0;
+            }
+        }
+    }
+
+    public static void afisVecini(int[][] mat, int lin, int col){
+        System.out.println("Vecinii elementului " + mat[lin][col] + " sunt: ");
+        if(mat[lin+1][col] != 0)
+            System.out.println(mat[lin+1][col]);
+        if(mat[lin][col+1] != 0)
+            System.out.println(mat[lin+1][col]);
+        if(mat[lin-1][col] != 0)
+            System.out.println(mat[lin+1][col]);
+        if(mat[lin][col-1] != 0)
+            System.out.println(mat[lin+1][col]);
+    }
+}
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+

@@ -1,0 +1,611 @@
+/*
+Handru Radu, Grupa 2122, Laboratorul 7
+
+1. Creați o interfață denumită Generator<T> cu singura metodă next(T var). Implementați interfața pentru a permite
+generarea valorilor următoare în cazul aplicării asupra unor variabile de tipuri de date concrete (Integer, Character, etc.).
+Instanțierea clasei se va face în cadrul metodei main( ), care va fi poziționată într-o clasă distinctă.
+*/
+
+import java.util.Scanner;
+
+interface Generator<T>{
+    T next(T var);
+}
+
+class GeneratorInteger implements Generator<Integer> {
+    @Override
+    public Integer next(Integer var) {
+        return ++var;
+    }
+}
+
+class GeneratorCharacter implements Generator<Character> {
+    @Override
+    public Character next(Character var) {
+        return ++var;
+    }
+}
+
+class GeneratorFloat implements Generator<Float> {
+    @Override
+    public Float next(Float var) {
+        return ++var;
+    }
+}
+
+public class Main{
+    public static void main(String[] args) {
+        Scanner intrareScanner = new Scanner(System.in);
+
+        //Integer
+        System.out.println("Introduceti un intreg: ");
+        int n = -1;
+        try{
+            n = intrareScanner.nextInt();
+        }
+        catch (NumberFormatException e1){
+            System.out.println("Valoarea introdusa este invalida!!");
+            System.exit(1);
+        }
+        GeneratorInteger genInt1 = new GeneratorInteger();
+        System.out.println("Valoarea urmatoare a lui " + n + " este: " + genInt1.next(n));
+
+        //Character
+        System.out.println("Introduceti un Caracter: ");
+        char c;
+        c = intrareScanner.next().charAt(0);
+        GeneratorCharacter genChr1 = new GeneratorCharacter();
+        System.out.println("Valoarea urmatoare a caracterului " + c + " este: " + genChr1.next(c));
+
+        //Float
+        System.out.println("Introduceti un numar real: ");
+        float f = -1;
+        try{
+            f = intrareScanner.nextFloat();
+        }
+        catch (NumberFormatException e1){
+            System.out.println("Valoarea introdusa este invalida!!");
+            System.exit(1);
+        }
+        GeneratorFloat genFloat1 = new GeneratorFloat();
+        System.out.println("Valoarea urmatoare a lui " + f + " este: " + genFloat1.next(f));
+    }
+}
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 7
+
+3. Implementați o aplicație în cadrul căreia să aveți o clasă SetterGetter generică ce permite setarea și returnarea
+valorilor atributelor pentru mai multe tipuri de obiecte. De exemplu, având clasele Copil, Adult și Pensionar, să se poată
+seta și returna numele și vârsta acestora. Creați colecții cu intrări unice de obiecte de tip Copil, Adult, Pensionar pe care
+să le populați cu date citite din consolă. Afișați datele preluate în diferite moduri.
+*/
+
+import java.util.Scanner;
+
+class SetterGetter <T> {
+    private String nume;
+    private int varsta;
+    public String getNume() {
+        return nume;
+    }
+    public void setNume(String nume) {
+        this.nume = nume;
+    }
+    public int getVarsta() {
+        return varsta;
+    }
+    public void setVarsta(int varsta) {
+        this.varsta = varsta;
+    }
+}
+
+class Pensionar{
+    private String nume;
+    private int varsta;
+}
+
+class Adult{
+    private String nume;
+    private int varsta;
+}
+
+class Copil {
+    private String nume;
+    private int varsta;
+}
+
+public class MyMain{
+    public static void main(String[] args) {
+        Scanner intrareScanner = new Scanner(System.in);
+        String nume;
+        int varsta = 0;
+
+        //Pensionar
+        System.out.println("Introduceti numele Pensionarului: ");
+        nume = intrareScanner.next();
+        System.out.println("Introduceti varsta Pensionarului: ");
+        try {
+            varsta = intrareScanner.nextInt();
+        }
+        catch (NumberFormatException e2){
+            System.out.println("Valoarea introdusa este incorecta!!!");
+            System.exit(2);
+        }
+        if(varsta < 65 || varsta > 130){
+            System.out.println("Varsta incorecta!!!");
+        }
+
+        SetterGetter<Pensionar> pensionar1 = new SetterGetter<>();
+        pensionar1.setNume(nume);
+        pensionar1.setVarsta(varsta);
+
+        System.out.println("\nPensionarul " + pensionar1.getNume() + " are varsta de " + pensionar1.getVarsta() + " ani\n");
+
+
+
+
+        //Adult
+        System.out.println("Introduceti numele Adultului: ");
+        nume = intrareScanner.next();
+        System.out.println("Introduceti varsta Adultului: ");
+        try {
+            varsta = intrareScanner.nextInt();
+        }
+        catch (NumberFormatException e2){
+            System.out.println("Valoarea introdusa este incorecta!!!");
+            System.exit(2);
+        }
+        if(varsta < 18 || varsta > 65){
+            System.out.println("Varsta incorecta!!!");
+        }
+
+        SetterGetter <Adult> adult1 = new SetterGetter<>();
+        adult1.setNume(nume);
+        adult1.setVarsta(varsta);
+
+        System.out.println("\nAdultul " + adult1.getNume() + " are varsta de " + adult1.getVarsta() + " ani\n");
+
+
+
+        //Copil
+        System.out.println("Introduceti numele Copilului: ");
+        nume = intrareScanner.next();
+        System.out.println("Introduceti varsta Copilului: ");
+        try {
+            varsta = intrareScanner.nextInt();
+        }
+        catch (NumberFormatException e2){
+            System.out.println("Valoarea introdusa este incorecta!!!");
+            System.exit(2);
+        }
+        if(varsta > 18 || varsta <= 0){
+            System.out.println("Varsta incorecta!!!");
+        }
+
+        SetterGetter <Copil> copil1 = new SetterGetter<>();
+        copil1.setNume(nume);
+        copil1.setVarsta(varsta);
+
+        System.out.println("\nCopilul " + copil1.getNume() + " are varsta de " + copil1.getVarsta() + " ani");
+    }
+}
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 7
+
+4.  Implementati o clasa numita UserFile (denumire, extensie, tip, marime in bytes, constructori, mutatori si accesori).
+Tipurile de fisiere sunt predefinite si stocate intr-un obiect Hashtable (de ex. „imagine” =>0, „text” =>1, „aplicatie” =>2,
+etc.). Creați un șir de obiecte instanțiate din această clasă și citiți de la tastatură datele aferente. Afișați toate extensiile
+specifice tipurilor de fișiere predefinite. Ordonați lista de fișiere în funcție de mărime si afișați rezultatul.
+*/
+
+import java.util.*;
+import java.lang.Comparable;
+import java.util.Hashtable;
+
+class UserFile implements Comparable <UserFile>{
+    private String denumire;
+    private String extensie;
+    private int tip;
+    private long marime;
+
+    public UserFile(){
+        this.denumire = null;
+        this.extensie = null;
+        this.tip = 0;
+        this.marime = 0;
+    }
+
+    public UserFile(String denumire, String extensie, int tip, long marime) {
+        this.denumire = denumire;
+        this.extensie = extensie;
+        this.tip = tip;
+        this.marime = marime;
+    }
+
+    public String getDenumire() {
+        return denumire;
+    }
+
+    public void setDenumire(String denumire) {
+        this.denumire = denumire;
+    }
+
+    public String getExtensie() {
+        return extensie;
+    }
+
+    public void setExtensie(String extensie) {
+        this.extensie = extensie;
+    }
+
+    public int getTip() {
+        return tip;
+    }
+
+    public void setTip(int tip) {
+        this.tip = tip;
+    }
+
+    public long getMarime() {
+        return marime;
+    }
+
+    public void setMarime(long marime) {
+        this.marime = marime;
+    }
+
+    @Override
+    public String toString(){
+        return denumire + " " + extensie + " " + tip + " " + marime;
+    }
+
+    @Override
+    public int compareTo(UserFile user1) {
+        return Long.compare(this.marime, user1.marime);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner intrareScanner = new Scanner(System.in);
+        System.out.println("Introduceti numarul de Useri: ");
+        int n;
+        n = intrareScanner.nextInt();
+
+        UserFile[] useri = new UserFile[n];
+
+
+        //HashTable
+        Hashtable<String, Integer> usersHash = new Hashtable<>();
+        usersHash.put("Imagine",1);
+        usersHash.put("Text",2);
+        usersHash.put("Aplicatie",3);
+        usersHash.put("PDF",4);
+        usersHash.put("Joc",5);
+
+
+
+        String denumire;
+        String extensie;
+        int tip = -1;
+        long marime = -1;
+
+        for (int i = 0; i < n; i++) {
+            System.out.println("File-ul userului " + (i + 1));
+            //Citirea valorilor
+            System.out.println("Introduceti denumirea: ");
+            denumire = intrareScanner.next();
+
+            System.out.println("Introduceti extensia: ");
+            extensie = intrareScanner.next();
+
+            System.out.println("Introduceti tipul: ");
+            try {
+                tip = intrareScanner.nextInt();
+            } catch (NumberFormatException e1) {
+                System.out.println("Valoarea introdusa este invalida!!");
+                System.exit(1);
+            }
+
+            if(tip < 1 || tip > 5)
+            {
+                System.out.println("Valoare incorecta!!");
+                System.exit(2);
+            }
+
+            System.out.println("Introduceti marimea: ");
+            try {
+                marime = intrareScanner.nextLong();
+            } catch (NumberFormatException e1) {
+                System.out.println("Valoarea introdusa este invalida!!");
+                System.exit(3);
+            }
+
+            if(marime <= 0)
+            {
+                System.out.println("Valoare incorecta!!");
+                System.exit(4);
+            }
+
+            useri[i] = new UserFile(denumire,extensie,tip,marime);
+        }
+
+        //HashTable
+        Enumeration extensii = usersHash.keys();
+        System.out.println("Afisarea extensiilor: ");
+        while(extensii.hasMoreElements()){
+            extensie = (String) extensii.nextElement();
+            for(int i = 0; i < n ; i ++)
+                if(useri[i].getTip() == usersHash.get(extensie))
+                    System.out.println("Extensia: " + useri[i].getExtensie() + " este de tipul: " + usersHash.get(extensie));
+        }
+
+        //Lista
+        Arrays.sort(useri);
+        List <UserFile> listaUserFiles = Arrays.asList(useri);
+
+        System.out.println("Userii sunt: " + listaUserFiles);
+    }
+}
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 7
+
+5. Scrieti o clasa Student cu campurile private nume, grupa, media, si metode getter/setter pentru campuri. In main(),
+plasata in alta clasa, creati o colectie de tip SortedSet, cu obiecte de tip Student, initializate cu valori citite de la tastatura,
+care sa pastreze elementele descrescator dupa medie si crescator dupa nume (cei care au aceeasi medie sa fie in ordine
+alfabetica). Parcurgeti cu for-loop colectia si afisati toate elementele. Parcurgeti apoi colectia cu un iterator si afisati toti
+studentii cu media >=8. Parcurgeti colectia cu forEach() si afisati toate datele studentilor dintr-o anumita grupa.
+*/
+
+import java.util.Scanner;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.Comparator;
+import java.util.*;
+
+class Student{
+    private String nume;
+    private int grupa;
+    private double media;
+    Student(String nume, int grupa, double media){
+        this.nume = nume;
+        this.grupa = grupa;
+        this.media = media;
+    }
+    public String getNume() {
+        return nume;
+    }
+
+    public void setNume(String nume) {
+        this.nume = nume;
+    }
+
+    public int getGrupa() {
+        return grupa;
+    }
+
+    public void setGrupa(int grupa) {
+        this.grupa = grupa;
+    }
+
+    public double getMedia() {
+
+        return media;
+    }
+
+    public void setMedia(double media) {
+
+        this.media = media;
+    }
+
+    @Override
+    public String toString(){
+        return this.nume + " " + this.grupa + " " + this.media;
+    }
+
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner intrareScanner = new Scanner(System.in);
+        System.out.println("Introduceti numarul de studenti: ");
+        int n = intrareScanner.nextInt();
+
+        SortedSet <Student> sortStudenti = new TreeSet<>(Comparator.comparingDouble(Student::getMedia).reversed().thenComparing(Student::getNume));
+
+        String nume;
+        int grupa = 0;
+        double media = 0;
+
+        for(int i = 0 ; i < n ; i ++){
+            System.out.println("Studentul numarul " + (i + 1));
+            System.out.print("Introdu Numele: ");
+            nume = intrareScanner.next();
+            System.out.print("Introdu grupa: ");
+            grupa = intrareScanner.nextInt();
+            if(grupa < 0){
+                System.out.println("Grupa nu exista!!");
+                System.exit(1);
+            }
+            System.out.print("Introdu media: ");
+            media = intrareScanner.nextDouble();
+            if(media < 1 || media > 10)
+            {
+                System.out.println("Valoarea mediei este incorecta!");
+                System.exit(2);
+            }
+
+            sortStudenti.add(new Student(nume,grupa,media));
+        }
+
+        System.out.println("\nAfisarea Studentilor: ");
+        for(Student student: sortStudenti){
+            System.out.println(student);
+        }
+
+        Iterator <Student> iterSort = sortStudenti.iterator();
+
+        System.out.println("\nStudentii cu media peste 8: ");
+        while(iterSort.hasNext()){
+            Student student = iterSort.next();
+            if(student.getMedia() >= 8)
+                System.out.println(student);
+        }
+
+        System.out.println("\nIntroduceti grupa din care doriti sa vedeti studentii: ");
+        grupa = intrareScanner.nextInt();
+
+        boolean verifGrupa = false;
+        System.out.println("Studentii din grupa " + grupa + " sunt: ");
+        for(Student student: sortStudenti){
+            if(student.getGrupa() == grupa) {
+                System.out.println(student);
+                verifGrupa = true;
+            }
+        }
+        if(!verifGrupa)
+            System.out.println("In grupa " + grupa + " nu exista studenti sau grupa nu exista!!!");
+    }
+}
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 7
+
+6. Scrieti o clasa Angajat cu campurile private nume, varsta, salariu si metode getter/setter pentru campuri. In metoda
+main(), plasata in alta clasa, creati o lista de obiecte de tip Angajat, initializate cu valori citite de la tastatura. Realizati
+mai multe sortari ale listei:
+- crescator dupa nume, folosind interfata Comparable
+- descrescator dupa varsta, folosind interfata Comparable si o expresie lambda
+- crescator dupa nume si descrescator dupa salariu, folosind interfata Comparator
+*/
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Comparator;
+import java.lang.Comparable;
+import java.util.stream.Collectors;
+
+class Angajat implements Comparable<Angajat>{
+    private String nume;
+    private int varsta;
+    private int salariu;
+    Angajat(String nume, int varsta, int salariu){
+        this.nume = nume;
+        this.varsta = varsta;
+        this.salariu = salariu;
+    }
+    public String getNume() {
+        return nume;
+    }
+
+    public void setNume(String nume) {
+        this.nume = nume;
+    }
+
+    public int getVarsta() {
+        return varsta;
+    }
+
+    public void setVarsta(int varsta) {
+        this.varsta = varsta;
+    }
+
+    public int getSalariu() {
+        return salariu;
+    }
+
+    public void setSalariu(int salariu) {
+        this.salariu = salariu;
+    }
+
+    @Override
+    public String toString(){
+        return nume + " " + varsta + " " + salariu;
+    }
+
+    @Override
+    public int compareTo(Angajat angajat1){
+        return (int)this.nume.compareTo(angajat1.getNume());
+    }
+}
+
+public class Main{
+    public static void main(String[] args) {
+
+        Scanner intrareScanner = new Scanner(System.in);
+        System.out.println("Introduceti numarul de angajati: ");
+        int n = intrareScanner.nextInt();
+
+        Angajat[] angajati = new Angajat[n];
+
+        String nume;
+        int varsta;
+        int salariu;
+
+        for(int i = 0 ; i < n ; i ++){
+            System.out.println("\nAngajatul numarul " + (i + 1));
+            System.out.print("Introduceti numele angajatului: ");
+            nume = intrareScanner.next();
+            System.out.print("Introduceti varsta angajatului: ");
+            varsta = intrareScanner.nextInt();
+            if (varsta <= 0 || varsta > 130) {
+                System.out.print("Valorea este incorecta!!!");
+                System.exit(1);
+            }
+            System.out.print("Introduceti salariul angajatului: ");
+            salariu = intrareScanner.nextInt();
+
+            angajati[i] = new Angajat(nume,varsta,salariu);
+        }
+
+
+        //Crescator dupa nume, folosind Comparable
+        Arrays.sort(angajati);
+        List<Angajat> listaAngajatiNumeCrescator = Arrays.asList(angajati);
+        System.out.println("\nLista Angajatilor in ordine crescatoare dupa nume: " + listaAngajatiNumeCrescator);
+
+        //Descrescator dupa varsta, folosind Comparable si o expresie lambda
+        List <Angajat> listaAngajatiVarstaDescrescator = Arrays.asList(angajati);
+        listaAngajatiVarstaDescrescator.sort((var1,var2)->Integer.compare(var2.getVarsta(),var1.getVarsta()));
+        System.out.println("\nLista Angajatilor in ordine descrescatoare dupa varsta: " + listaAngajatiVarstaDescrescator);
+
+        //Crescator dupa nume, Descarescator dupa salariu
+        List <Angajat> listaAngajatiCrescNume = Arrays.asList(angajati);
+
+        //Sortam crescator dupa nume
+        listaAngajatiCrescNume.sort(Comparator.comparing(Angajat::getNume));
+
+        //Cream un comparator pentru a ordona Angajatii descrescator dupa salariu
+        Comparator <Angajat> comparatorInvers = (var1, var2) -> Integer.compare(var2.getSalariu(),var1.getSalariu());
+        List <Angajat> listaAngajatiCNDS= listaAngajatiCrescNume.stream().sorted(comparatorInvers).collect(Collectors.toList());
+        System.out.println("\nLista Angajatilor in ordine crescatoare dupa nume si descrescator dupa salariu: " + listaAngajatiCNDS);
+    }
+}
+
+
+

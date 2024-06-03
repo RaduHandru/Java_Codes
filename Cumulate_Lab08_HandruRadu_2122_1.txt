@@ -1,0 +1,271 @@
+/*
+Handru Radu, Grupa 2122, Laboratorul 8
+
+1. Folosind mecanismul preluării datelor de la tastatură cu un BufferedReader și InputStreamReader, preluați: un mesaj
+de tip String, ziua ca intreg, luna de tip String si anul ca un întreg. Procesul se va încheia în momentul trecerii la o nouă
+linie, când se va afișa fiecare câmp pe o linie separată. Afisati de asemenea toate campurile in ordinea in care au aparut.
+Recomandare: Folosiți clasa StreamTokenizer, atributele sval, nval respectiv constanta TT_EOL.
+Considerați și cazul în care nu cunoașteți natura câmpurilor introduse (numeric, cuvânt) folosind constantele
+TT_NUMBER, TT_WORD.
+ */
+
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) {
+        BufferedReader buff = new BufferedReader(new InputStreamReader(System.in));
+        StreamTokenizer st = new StreamTokenizer(buff);
+
+        st.eolIsSignificant(true);
+        boolean eol1 = false;
+
+        try {
+            String mesaj = null;
+            int zi = 0;
+            String luna = null;
+            int an = 0;
+
+            do{
+                int token = st.nextToken();
+                switch(token){
+                    case StreamTokenizer.TT_EOL:
+                        System.out.println("Final de linie!!");
+                        eol1 = true;
+                        break;
+                    case StreamTokenizer.TT_WORD:
+                        if(mesaj == null) {
+                            mesaj = st.sval;
+                        }
+                        else{
+                            luna = st.sval;
+                        }
+                        break;
+                    case StreamTokenizer.TT_NUMBER:
+                        if(zi == 0) {
+                            zi = (int) st.nval;
+                        }
+                        else {
+                            an = (int) st.nval;
+                        }
+                        break;
+                }
+            }
+            while(!eol1);
+
+            System.out.println("Mesajul: " + mesaj);
+            System.out.println("Ziua: " + zi);
+            System.out.println("Luna: " + luna);
+            System.out.println("Anul: " + an);
+        }
+        catch (IOException e1){
+            System.out.println("Exceptie la citirea datelor!!!");
+            System.exit(1);
+        }
+
+    }
+}
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 8
+
+2. Implementați aplicația anterioară folosind un fișier de intrare care conține un anumit număr de inregistrări cu
+formatul specificat mai sus.
+ */
+
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) {
+        try {
+            Reader buff = new BufferedReader(new InputStreamReader(new FileInputStream("src/fisIntrare.dat")));
+            StreamTokenizer st = new StreamTokenizer(buff);
+            st.eolIsSignificant(true);
+            
+            boolean eof1 = false;
+
+            do{
+                boolean eol1 = false;
+
+                //Variabile
+                String mesaj = null;
+                int zi = 0;
+                String luna = null;
+                int an = 0;
+
+                do {
+                    int token = st.nextToken();
+                    switch (token) {
+                        case StreamTokenizer.TT_EOF:
+                            System.out.println("Final de fisier!!");
+                            eof1 = true;
+                            break;
+                        case StreamTokenizer.TT_EOL:
+                            System.out.println("Final de linie!!");
+                            eol1 = true;
+                            break;
+                        case StreamTokenizer.TT_WORD:
+                            if (mesaj == null) {
+                                mesaj = st.sval;
+                            } else {
+                                luna = st.sval;
+                            }
+                            break;
+                        case StreamTokenizer.TT_NUMBER:
+                            if (zi == 0) {
+                                zi = (int) st.nval;
+                            } else {
+                                an = (int) st.nval;
+                            }
+                            break;
+                    }
+                }
+                while(!eol1 && !eof1);
+
+                System.out.println("Mesajul: " + mesaj);
+                System.out.println("Ziua: " + zi);
+                System.out.println("Luna: " + luna);
+                System.out.println("Anul: " + an);
+                System.out.print("\n");
+            }while(!eof1);
+        } catch (IOException e1) {
+            System.out.println("Exceptie la citirea datelor!!!");
+            System.exit(1);
+        }
+    }
+}
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 8
+
+3. Se citesc de la tastatură date formatate sub forma DD/MM/YYYY. Să se afișeze sub forma DD luna YYYY, unde luna
+este forma expandată a MM și de asemenea să se afișeze și dacă anul este bisect. Programul se oprește prin apăsarea
+tastei X sau x. Puteti folosi si clasa DateFormatSymbols pentru conversia lunii.
+*/
+
+import java.text.DateFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Scanner;
+import java.util.Date;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner intrareScanner = new Scanner(System.in);
+
+        DateFormatSymbols dfsMonths = new DateFormatSymbols();
+        String[] Months = dfsMonths.getMonths();
+
+        boolean intrareX = false;
+        do {
+            System.out.println("Introduceti datele dupa forma (DD/MM/YYYY):");
+            String data = intrareScanner.nextLine();
+            if (data.equals("X") || data.equals("x")) {
+                intrareX = true;
+                System.exit(1);
+            }
+            else {
+                int ziua, luna, anul;
+                try {
+                    SimpleDateFormat formatData = new SimpleDateFormat("dd/MM/yyyy");
+                    Date dataD = formatData.parse(data);
+
+                    ziua = dataD.getDate();
+                    luna = dataD.getMonth();
+                    anul = dataD.getYear();
+
+                    String lunaExpandata = Months[luna];
+                    System.out.println("Data este: " + ziua + " " + lunaExpandata + " " + anul);
+
+                    if (anul % 4 == 0 && anul % 100 != 0)
+                        System.out.println("Anul este bisect!!");
+                    else System.out.println("Anul nu este bisect!!");
+
+                } catch (ParseException pe) {
+                    System.out.println("ParseException!!!");
+                    System.exit(1);
+                }
+            }
+        }while (!intrareX);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 8
+
+4. Se dă un fișier binar ce conține o secvență de caractere ce reprezintă o cheie privată pentru Bitcoin (256 caractere).
+De la tastatură se citește o secvență de caractere ce reprezintă cheia publică a unui Bitcoin. Să se genereze
+identificatorul de tranzacție corespunzător acestor informații folosind operația de sau exclusiv (XOR) pe biți aplicată
+între cheile publică și privată. Scrieți informația rezultată într-un fișier binar.
+*/
+
+import java.io.*;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner intrareScanner = new Scanner(System.in);
+        File inputFile = new File("src/fisIntrare.bin");
+        File outputFile = new File("src/fisierIesire.bin");
+
+        byte[] cheiePrivata = new byte[256];
+        try {
+            FileInputStream fis = new FileInputStream(inputFile);
+            fis.read(cheiePrivata);
+            fis.close();
+        } catch (IOException e) {
+            System.out.println("Eroarea la accesarea fisierului!!!");
+            System.exit(1);
+        }
+
+        System.out.println("Introduceti cheia publica: ");
+        String cheiePublicaString = intrareScanner.nextLine();
+        byte[] cheiePublica = cheiePublicaString.getBytes();
+
+
+        byte[] cheieTranzactie = new byte[cheiePublica.length];
+        for (int i = 0; i < cheiePublica.length; i++) {
+            cheieTranzactie[i] = (byte) (cheiePublica[i] ^ cheiePrivata[i]);
+        }
+
+        System.out.println("Cheia Publica: " + cheiePublica);
+        System.out.println("Cheia Privata: " + cheiePrivata);
+        System.out.println("Cheia Tranzactie: " + cheieTranzactie);
+
+        try{
+            FileOutputStream fos = new FileOutputStream(outputFile);
+            fos.write(cheieTranzactie);
+            fos.close();
+        }
+        catch (IOException e2){
+            System.out.println("Eroarea la accesarea fisierului!!!");
+            System.exit(2);
+        }
+    }
+}
+
+
+
+

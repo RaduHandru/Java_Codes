@@ -1,0 +1,659 @@
+/*
+Handru Radu, Grupa 2122, Laboratorul 11
+
+1. Implementați o aplicație Java care folosește GridLayout pentru aranjarea în pagină a componentelor unei aplicații de
+calcul (TextField pt. intrare/ieșire, butoane pentru numere, operații matematice, ștergerea ecranului, etc.).
+*/
+
+import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+
+
+public class GridLayoutCalculator extends JFrame{
+    private static final int dimX = 300;
+
+    private static final int dimY = 300;
+
+    public GridLayoutCalculator(String title){
+        super(title);
+        this.setSize(dimX, dimY);
+        this.setLayout(new GridLayout(5,4, 1, 1));
+
+
+        //butoane pentru numere si operatii
+
+        JButton button1 = new JButton("1");
+        this.add(button1);
+
+        JButton button2 = new JButton("2");
+        this.add(button2);
+
+        JButton button3 = new JButton("3");
+        this.add(button3);
+
+        JButton buttonAdunare = new JButton("+");
+        this.add(buttonAdunare);
+
+
+        JButton button4 = new JButton("4");
+        this.add(button4);
+
+        JButton button5 = new JButton("5");
+        this.add(button5);
+
+        JButton button6 = new JButton("6");
+        this.add(button6);
+        JButton buttonScadere = new JButton("-");
+        this.add(buttonScadere);
+
+
+        JButton button7 = new JButton("7");
+        this.add(button7);
+
+        JButton button8 = new JButton("8");
+        this.add(button8);
+
+        JButton button9 = new JButton("9");
+        this.add(button9);
+
+        JButton buttonInmultire = new JButton("*");
+        this.add(buttonInmultire);
+
+
+        JButton buttonStergere = new JButton("C");
+        this.add(buttonStergere);
+
+        JButton button0 = new JButton("0");
+        this.add(button0);
+
+        JButton buttonImpartire = new JButton("/");
+        this.add(buttonImpartire);
+
+
+        //Egal
+        JButton buttonEgal = new JButton("=");
+        this.add(buttonEgal);
+
+        //TextField pentru afisarea rezultatului
+        JTextField textField = new JTextField(20);
+        this.add(textField);
+
+
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
+    }
+
+    public static void main (String[] args) {
+        new GridLayoutCalculator("Calculator GridLayout");
+    }
+}
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+/*
+Handru Radu, Grupa 2122, Laboratorul 11
+
+2. Implementați o aplicație Java care folosește GridBagLayout pentru aranjarea în pagină a componentelor unei aplicații
+de calcul (TextField pt. intrare/ieșire, butoane pentru numere, operații matematice, ștergerea ecranului, etc.).
+*/
+
+import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+
+
+public class GridBagLayoutCalculator extends JFrame{
+    private static final int dimX = 300;
+
+    private static final int dimY = 300;
+
+    public GridBagLayoutCalculator(String title){
+        super(title);
+        this.setSize(dimX, dimY);
+        setLayout(new GridBagLayout());
+
+        GridBagConstraints gBC = new GridBagConstraints();
+
+        gBC.weightx = 1;
+        gBC.weighty = 1;
+
+        gBC.fill = GridBagConstraints.BOTH;
+
+        //butoane pentru numere si operatii
+        gBC.gridy = 0;
+
+        JButton button1 = new JButton("1");
+        this.add(button1, gBC);
+
+        JButton button2 = new JButton("2");
+        this.add(button2, gBC);
+
+        JButton button3 = new JButton("3");
+        this.add(button3, gBC);
+
+        JButton buttonAdunare = new JButton("+");
+        this.add(buttonAdunare, gBC);
+
+        gBC.gridy++;
+        JButton button4 = new JButton("4");
+        this.add(button4, gBC);
+
+        JButton button5 = new JButton("5");
+        this.add(button5, gBC);
+
+        JButton button6 = new JButton("6");
+        this.add(button6, gBC);
+        JButton buttonScadere = new JButton("-");
+        this.add(buttonScadere, gBC);
+
+
+        gBC.gridy++;
+        JButton button7 = new JButton("7");
+        this.add(button7, gBC);
+
+        JButton button8 = new JButton("8");
+        this.add(button8, gBC);
+
+        JButton button9 = new JButton("9");
+        this.add(button9, gBC);
+
+        JButton buttonInmultire = new JButton("*");
+        this.add(buttonInmultire, gBC);
+
+
+
+        gBC.gridy++;
+        gBC.gridwidth = 2;
+        JButton buttonStergere = new JButton("C");
+        this.add(buttonStergere, gBC);
+
+        gBC.gridwidth = 1;
+        JButton button0 = new JButton("0");
+        this.add(button0, gBC);
+
+        JButton buttonImpartire = new JButton("/");
+        this.add(buttonImpartire, gBC);
+
+
+        gBC.gridy++;
+        gBC.gridwidth = 4;
+
+        //Egal
+        JButton buttonEgal = new JButton("=");
+        this.add(buttonEgal,gBC);
+
+        gBC.gridy++;
+
+        //TextField pentru afisarea rezultatului
+        JTextField textField = new JTextField(20);
+        this.add(textField, gBC);
+
+
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
+    }
+
+    public static void main (String[] args) {
+        new GridBagLayoutCalculator("Calculator GridBagLayout");
+    }
+}
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 11
+
+4. Creați o aplicație ce preia din două câmpuri text (TextField) numele vostru și grupa din care faceți parte și afișează
+această informație într-o etichetă de culoare RGB (122,123,129).
+*/
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+class jPanelNumeGrupa extends JPanel{
+    public jPanelNumeGrupa(){
+        this.setBackground(Color.CYAN);
+        this.setLayout(new GridBagLayout());
+        this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        panelNG();
+    };
+    public void panelNG(){
+        GridBagConstraints gBC = new GridBagConstraints();
+
+        gBC.fill = GridBagConstraints.HORIZONTAL;
+
+        //Spatiere intre componente
+        gBC.insets = new Insets(3,3,3,3);
+
+        JLabel labelNume= new JLabel("Introduceti numele:");
+        JTextField tF1 = new JTextField(20);
+
+        gBC.gridwidth = 1;
+        gBC.gridx = 0;
+        gBC.gridy = 0;
+        this.add(labelNume, gBC);
+        gBC.gridx = 1;
+        gBC.gridy = 0;
+        this.add(tF1, gBC);
+
+
+        JLabel labelGrupa= new JLabel("Introduceti grupa:");
+        JTextField tF2 = new JTextField(20);
+        gBC.gridx = 0;
+        gBC.gridy = 1;
+        this.add(labelGrupa, gBC);
+        gBC.gridx = 1;
+        gBC.gridy = 1;
+        this.add(tF2, gBC);
+
+
+        JLabel labelNumeSiGrupa = new JLabel();
+
+        JButton buttonCopiere = new JButton("Copiere");
+        buttonCopiere.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                labelNumeSiGrupa.setText(tF1.getText() + "   " + tF2.getText());
+            }
+        });
+
+        gBC.gridx = 0;
+        gBC.gridy = 2;
+        gBC.gridwidth = 2;
+        this.add(buttonCopiere, gBC);
+
+        //Setarea culorilor
+        labelNumeSiGrupa.setOpaque(true);
+        labelNumeSiGrupa.setBackground(new Color(122,123,129));
+        labelNumeSiGrupa.setForeground(new Color(19, 19, 19));
+        //Centrarea textului in label
+        labelNumeSiGrupa.setHorizontalAlignment(SwingConstants.CENTER);
+        gBC.gridx = 0;
+        gBC.gridy = 3;
+        this.add(labelNumeSiGrupa, gBC);
+    }
+}
+
+class NumeGrupa extends JFrame{
+    private static final int dimX = 500;
+
+    private static final int dimY = 500;
+
+    public NumeGrupa(String title){
+        super(title);
+        this.setSize(dimX, dimY);
+        this.setLayout(new FlowLayout());
+
+        jPanelNumeGrupa jPanelNumeGrupa = new jPanelNumeGrupa();
+        this.add(jPanelNumeGrupa);
+        
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
+    }
+
+}
+
+public class Main {
+    public static void main(String[] args) {
+        new NumeGrupa("Nume si Grupa");
+    }
+}
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 11
+
+5. Implementați o aplicație grafică în care utilizatorul poate scrie (în componente de tip TextField) cantitățile R, G, B ale
+unei culori. După apăsarea unui buton, o componentă de tip Label va afișa un text care reprezintă cantitățile specificate,
+cu culoarea rezultată, dacă valorile sunt corecte (numerice, între 0-255). În caz contrar, eticheta va afișa cu roșu un
+mesaj de eroare. Încercați să folosiți excepții pentru verificarea valorilor.
+*/
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+class ExceptieValoareRGB extends Exception{
+    ExceptieValoareRGB(){
+        System.out.println("Valoarea este mai mica decat 0 sau mai mare decat 255");
+    }
+}
+
+class JPanelCuloare extends JPanel{
+    private int r;
+    private int g;
+    private int b;
+    JPanelCuloare(){
+        this.setBackground(Color.GRAY);
+        this.setLayout(new GridBagLayout());
+        afisareInformatiePanel();
+    }
+    public void afisareInformatiePanel(){
+        GridBagConstraints gBC = new GridBagConstraints();
+        gBC.fill = GridBagConstraints.HORIZONTAL;
+        gBC.insets = new Insets(2,2,2,2);
+
+        gBC.gridwidth = 1;
+        gBC.gridx = 0;
+        gBC.gridy = 0;
+        this.add(new JLabel(" R = "), gBC);
+        gBC.gridx = 1;
+        gBC.gridy = 0;
+        JTextField textFieldR = new JTextField(5);
+        this.add(textFieldR, gBC);
+
+        gBC.gridx = 0;
+        gBC.gridy = 1;
+        this.add(new JLabel(" G = "), gBC);
+        gBC.gridx = 1;
+        gBC.gridy = 1;
+        JTextField textFieldG = new JTextField(5);
+        this.add(textFieldG, gBC);
+
+        gBC.gridx = 0;
+        gBC.gridy = 2;
+        this.add(new JLabel(" B = "), gBC);
+        gBC.gridx = 1;
+        gBC.gridy = 2;
+        JTextField textFieldB = new JTextField(5);
+        this.add(textFieldB, gBC);
+
+        gBC.gridwidth = 2;
+        gBC.gridx = 0;
+        gBC.gridy = 3;
+        JLabel labelCuloare = new JLabel();
+        JButton genCuloare = new JButton("Generare Culoare");
+
+        genCuloare.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    r = Integer.parseInt(textFieldR.getText());
+                    if (r < 0 || r > 255) {
+                        throw new ExceptieValoareRGB();
+                    }
+                }
+                catch (ExceptieValoareRGB exceptieValoareRGB){
+                    System.out.println("Valoarea introdusa pentru R este incorecta");
+                    System.exit(2);
+                }
+                catch (NumberFormatException e1) {
+                    System.out.println("Valoarea introdusa nu este un numar corect, contine si alte caractere");
+                    System.exit(2);
+                }
+
+                try{
+                    g = Integer.parseInt(textFieldG.getText());
+                    if(g < 0 || g > 255){
+                        throw new ExceptieValoareRGB();
+                    }
+                }
+                catch (ExceptieValoareRGB exceptieValoareRGB){
+                    System.out.println("Valoarea introdusa pentru G este incorecta");
+                    System.exit(2);
+                }
+                catch (NumberFormatException e1) {
+                    System.out.println("Valoarea introdusa nu este un numar corect, contine si alte caractere");
+                    System.exit(2);
+                }
+
+                try {
+                    b = Integer.parseInt(textFieldB.getText());
+                    if (b < 0 || b > 255) {
+                        throw new ExceptieValoareRGB();
+                    }
+                }catch (ExceptieValoareRGB exceptieValoareRGB){
+                    System.out.println("Valoarea introdusa pentru B este incorecta");
+                    System.exit(2);
+                }
+                catch (NumberFormatException e1) {
+                    System.out.println("Valoarea introdusa nu este un numar corect, contine si alte caractere");
+                    System.exit(2);
+                }
+
+                labelCuloare.setText(r + " " + g + " " + b);
+                Color culoare = new Color(r, g, b);
+                labelCuloare.setForeground(culoare);
+            }
+        });
+        this.add(genCuloare, gBC);
+
+        gBC.gridx = 0;
+        gBC.gridy = 4;
+        labelCuloare.setOpaque(true);
+        labelCuloare.setHorizontalAlignment(SwingConstants.CENTER);
+        this.add(labelCuloare, gBC);
+    }
+}
+
+public class JFrameCuloare extends JFrame{
+    static final int dimX = 300;
+    static final int dimY = 300;
+    JFrameCuloare(String title){
+        super(title);
+        this.setSize(dimX, dimY);
+        this.setLayout(new FlowLayout());
+
+        JPanelCuloare jPanelCuloare = new JPanelCuloare();
+        this.add(jPanelCuloare);
+
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
+    }
+
+    public static void main(String[] args){
+        new JFrameCuloare("Aplicatie Culoare");
+    }
+}
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 11
+
+6. Scrieți o aplicație Java ce include un formular de înregistrare ca și student la un curs online. Formularul include
+informații referitoare la nume, prenume, an de studii, facultatea, finanțare taxă/buget și cursul dorit. Anul de studii,
+facultatea și cursul sunt disponibile ca și listă de opțiuni, iar finanțarea este de tip checkbox. Într-un câmp de tip
+TextArea afișați informația completată de student ca urmare a apăsării butonului de înregistrare.
+*/
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+class JPanelFormular extends JPanel{
+    static boolean inscriere = false;
+    JPanelFormular(){
+        this.setPreferredSize(new Dimension(500,500));
+        this.setBackground(Color.GRAY);
+        this.setLayout(new GridBagLayout());
+        afisareInformatiePanel();
+    }
+    public void afisareInformatiePanel(){
+        GridBagConstraints gBC = new GridBagConstraints();
+        gBC.fill = GridBagConstraints.HORIZONTAL;
+        gBC.insets = new Insets(4,4,4,4);
+
+        JLabel labelFormular = new JLabel("Formular inscriere Curs");
+        labelFormular.setFont(new Font("Serif",Font.PLAIN, 20));
+        gBC.gridwidth = 4;
+        gBC.gridx = 0;
+        gBC.gridy = 0;
+        labelFormular.setHorizontalAlignment(SwingConstants.CENTER);
+        this.add(labelFormular, gBC);
+
+
+
+        gBC.gridwidth = 2;
+        gBC.gridx = 0;
+        gBC.gridy = 1;
+        JLabel labelNume = new JLabel("Nume:");
+        labelNume.setHorizontalAlignment(SwingConstants.CENTER);
+        this.add(labelNume, gBC);
+        gBC.gridx = 2;
+        gBC.gridy = 1;
+        JTextField textFieldNume = new JTextField(5);
+        this.add(textFieldNume, gBC);
+
+        gBC.gridx = 0;
+        gBC.gridy = 2;
+        JLabel labelPrenume = new JLabel("Prenume:");
+        labelPrenume.setHorizontalAlignment(SwingConstants.CENTER);
+        this.add(labelPrenume, gBC);
+        gBC.gridx = 2;
+        gBC.gridy = 2;
+        JTextField textFieldPrenume = new JTextField(5);
+        this.add(textFieldPrenume, gBC);
+
+
+
+        gBC.gridx = 0;
+        gBC.gridy = 3;
+        JLabel labelAnStudiu = new JLabel("Anul de studiu:");
+        this.add(labelAnStudiu, gBC);
+        gBC.gridx = 2;
+        gBC.gridy = 3;
+        JComboBox<String> comboBoxAnStudii = new JComboBox<>();
+        comboBoxAnStudii.addItem("1");
+        comboBoxAnStudii.addItem("2");
+        comboBoxAnStudii.addItem("3");
+        comboBoxAnStudii.addItem("4");
+        this.add(comboBoxAnStudii, gBC);
+
+        gBC.gridx = 0;
+        gBC.gridy = 4;
+        JLabel labelFacultate = new JLabel("Facultatea:");
+        this.add(labelFacultate, gBC);
+        gBC.gridx = 2;
+        gBC.gridy = 4;
+        JComboBox<String> comboBoxFacultate = new JComboBox<>();
+        comboBoxFacultate.addItem("ETTI");
+        comboBoxFacultate.addItem("Calculatoare");
+        comboBoxFacultate.addItem("Autovehicule Rutiere");
+        comboBoxFacultate.addItem("Instalatii");
+        this.add(comboBoxFacultate, gBC);
+
+
+        gBC.gridx = 0;
+        gBC.gridy = 5;
+        JLabel labelCurs = new JLabel("Cursul:");
+        this.add(labelCurs, gBC);
+        gBC.gridx = 2;
+        gBC.gridy = 5;
+        JComboBox<String> comboBoxCurs = new JComboBox<>();
+        comboBoxCurs.addItem("Phyton");
+        comboBoxCurs.addItem("Java Script");
+        comboBoxCurs.addItem("C#");
+        comboBoxCurs.addItem("C++");
+        this.add(comboBoxCurs, gBC);
+
+        gBC.gridx = 0;
+        gBC.gridy = 6;
+        JLabel labelScolarizare = new JLabel("Scolarizare:");
+        this.add(labelScolarizare, gBC);
+
+
+        String[] buttonLabels ={"Buget", "Taxa"};
+
+        gBC.gridwidth = 1;
+        gBC.gridx = 2;
+        gBC.gridy = 6;
+        ButtonGroup buttonGroup = new ButtonGroup();
+        JRadioButton buttonBuget = new JRadioButton(buttonLabels[0]);
+        buttonGroup.add(buttonBuget);
+        buttonBuget.setActionCommand(buttonLabels[0]);
+        this.add(buttonBuget, gBC);
+
+        gBC.gridx = 3;
+        gBC.gridy = 6;
+        JRadioButton buttonTaxa = new JRadioButton(buttonLabels[1]);
+        buttonTaxa.setActionCommand(buttonLabels[1]);
+        buttonGroup.add(buttonTaxa);
+        this.add(buttonTaxa, gBC);
+
+        gBC.gridwidth = 4;
+        JButton buttonInscriere = new JButton("Inregistrare");
+
+        JTextArea textArea = new JTextArea(4, 20);
+
+        buttonInscriere.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textArea.setText("");
+                String buttonGroupSelection = buttonGroup.getSelection().getActionCommand();
+                System.out.println(buttonGroupSelection);
+                textArea.append(textFieldNume.getText() + "  " + textFieldPrenume.getText() + "\nAnul de studii: " + comboBoxAnStudii.getSelectedItem()
+                        + "\nFacultatea: " + comboBoxFacultate.getSelectedItem() + "\nCursul: " + comboBoxCurs.getSelectedItem() + "\nTipul de studii: " + buttonGroupSelection);
+            }
+        });
+
+        gBC.gridx = 0;
+        gBC.gridy = 7;
+        this.add(buttonInscriere, gBC);
+        gBC.gridx = 0;
+        gBC.gridy = 8;
+        this.add(textArea, gBC);
+    }
+}
+
+public class JFrameFormular extends JFrame{
+    static final int dimX = 700;
+    static final int dimY = 700;
+    JFrameFormular(String title){
+        super(title);
+        this.setSize(dimX, dimY);
+        this.setLayout(new FlowLayout());
+
+        JPanelFormular jPanelFormular = new JPanelFormular();
+        this.add(jPanelFormular);
+
+        this.pack();
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
+    }
+
+    public static void main(String[] args){
+        new JFrameFormular("Formular inscriere curs online!!");
+    }
+}
+
+
+
+
+
+
+
+
+

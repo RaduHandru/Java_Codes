@@ -1,0 +1,666 @@
+/*
+Handru Radu, Grupa 2122, Laboratorul 5
+
+1. Să se implementeze o interfață Java care conține prototipurile metodelor de adunare, scădere, înmulțire, împărțire,
+radical și ridicare la putere. Toate metodele vor avea doi parametri de tip double și vor specifica tipul returnat double.
+Implementați interfața astfel încât operațiile să fie definite în cadrul unei clase. Instanțiați clasa și verificați operațiile
+implementate.
+*/
+import java.lang.String;
+import java.lang.Math;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+
+interface Operatiile{
+    double adunare(double a, double b);
+    double scadere(double a, double b);
+    double inmultire(double a, double b);
+    double impartire(double a, double b);
+    double radical(double a, double b);
+    double ridicarePutere(double a, double b);
+}
+
+class Operatii implements Operatiile{
+    public double adunare(double a, double b){
+        return a + b;
+    }
+    public double scadere(double a, double b){
+        return a - b;
+    }
+    public double inmultire(double a, double b){
+        return a * b;
+    }
+    public double impartire(double a, double b){
+        return a / b;
+    }
+    public double radical(double a, double b){
+        return Math.sqrt(a * b);
+    }
+    public double ridicarePutere(double a, double b){
+        return Math.pow(a, b);
+    }
+}
+
+public class Matematica {
+    private static Scanner in;
+    public static void main(String[] args) {
+        in = new Scanner(System.in);
+        System.out.println("Introduceti 2 numere reale: ");
+        System.out.flush();
+
+        double a = 0, b = 0;
+        try {
+            a = in.nextDouble();
+            b = in.nextDouble();
+        }
+        catch (InputMismatchException e){
+            System.out.print("Valorile introduse sunt gresite!!!");
+            System.exit(1);
+        }
+
+        Operatii op1 = new Operatii();
+        System.out.println("Adunarea este: " + op1.adunare(a, b));
+        System.out.println("Scaderea este: " + op1.scadere(a,b));
+        System.out.println("Inmultirea este: " + op1.inmultire(a, b));
+        System.out.println("Impartirea este: " + op1.impartire(a, b));
+        System.out.println("Radicalul este: " + op1.radical(a, b));
+        System.out.println("Ridicarea lui " + a + " la puterea " + b + " este: " + op1.ridicarePutere(a, b));
+    }
+}
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 5
+
+1’. În loc de o interfață care conține toate metodele menționate anterior, să se implementeze 4 interfețe funcționale,
+câte una pentru fiecare metodă.
+Interfețele vor fi implementate în cadrul unei singure clase. Instanțiați clasa și verificați operațiile implementate.
+*/
+        import java.lang.String;
+import java.util.Scanner;
+import java.util.InputMismatchException;
+
+interface OperatiaAdunare {
+    double adunare(double a, double b);
+}
+interface OperatiaScadere {
+    double scadere(double a, double b);
+}
+interface OperatiaInmultire {
+    double inmultire(double a, double b);
+}
+
+interface OperatiaImpartire{
+    double impartire(double a, double b);
+}
+
+class Operatii implements OperatiaAdunare,OperatiaScadere,OperatiaInmultire,OperatiaImpartire{
+    public double adunare(double a, double b){
+        return a + b;
+    }
+    public double scadere(double a, double b){
+        return a - b;
+    }
+    public double inmultire(double a, double b){
+        return a * b;
+    }
+    public double impartire(double a, double b){
+        return a / b;
+    }
+}
+
+public class Matematica {
+    private static Scanner in;
+    public static void main(String[] args) {
+        in = new Scanner(System.in);
+        System.out.println("Introduceti 2 numere reale: ");
+        System.out.flush();
+
+        double a = 0, b = 0;
+        try {
+            a = in.nextDouble();
+            b = in.nextDouble();
+        }
+        catch (InputMismatchException e){
+            System.out.print("Valorile introduse sunt gresite!!!");
+            System.exit(1);
+        }
+
+        Operatii op1 = new Operatii();
+        System.out.println("Adunarea este: " + op1.adunare(a, b));
+        System.out.println("Scaderea este: " + op1.scadere(a,b));
+        System.out.println("Inmultirea este: " + op1.inmultire(a, b));
+        System.out.println("Impartirea este: " + op1.impartire(a, b));
+    }
+}
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 5
+
+1’’. Folosiți structura de la 1’ și implementați expresii lambda pentru definirea operațiilor aritmetice. Verificați
+funcționalitatea.
+*/
+        import java.lang.String;
+import java.util.Scanner;
+import java.util.InputMismatchException;
+
+interface OperatiaAdunare {
+    double adunare(double a, double b);
+}
+
+interface OperatiaScadere {
+    double scadere(double a, double b);
+}
+
+interface OperatiaInmultire {
+    double inmultire(double a, double b);
+}
+
+interface OperatiaImpartire{
+    double impartire(double a, double b);
+}
+
+public class Matematica {
+    private static Scanner in;
+    public static void main(String[] args) {
+        in = new Scanner(System.in);
+        System.out.println("Introduceti 2 numere reale: ");
+        System.out.flush();
+
+        OperatiaAdunare op1 = (double a, double b) -> (a + b);
+        OperatiaScadere op2 = (double a, double b) -> (a - b);
+        OperatiaInmultire op3 = (double a, double b) -> (a * b);
+        OperatiaImpartire op4 = (double a, double b) -> (a / b);
+
+        double a = 0, b = 0;
+        try {
+            a = in.nextDouble();
+            b = in.nextDouble();
+        }
+        catch (InputMismatchException e){
+            System.out.print("Valorile introduse sunt gresite!!!");
+            System.exit(1);
+        }
+
+        System.out.println("Adunarea este: " + op1.adunare(a, b));
+        System.out.println("Scaderea este: " + op2.scadere(a,b));
+        System.out.println("Inmultirea este: " + op3.inmultire(a, b));
+        System.out.println("Impartirea este: " + op4.impartire(a, b));
+    }
+}
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 5
+
+2. Definiți o interfață denumită FormaGeometrica care are 2 metode care primesc ca parametru o valoare integer și
+returnează o valoare double reprezentînd aria, respectiv perimetrul unei forme geometrice echilaterale.
+Implementați interfața în 3 clase distincte pentru forme concrete de tip pătrat, triunghi echilateral și hexagon regulat.
+Se preiau datele pentru un număr N de forme geometrice de fiecare tip.
+Să se calculeze aria și perimetrul total al formelor geometrice, ținând cont că acestea nu se suprapun.
+*/
+import java.lang.String;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+interface FormaGeometrica {
+    double aria(int l);
+    int perimetrul(int l);
+}
+
+class Patrat{
+    public double aria(int l){
+        return l * l;
+    }
+    public int perimetrul(int l){
+        return 4 * l;
+    }
+    public void afisarePatrat(int l){
+        System.out.println("Aria patratului este: " + aria(l));
+        System.out.println("Perimetrul patratului este: " + perimetrul(l));
+    }
+
+}
+class TriunghiEchi{
+    public double aria(int l){
+        return ((l ^ 2) * Math.sqrt(3)) / 4;
+    }
+    public int perimetrul(int l){
+        return 3 * l;
+    }
+    public void afisareTriunghi(int l){
+        System.out.println("Aria triunghiului este: " + aria(l));
+        System.out.println("Perimetrul triunghiului este: " + perimetrul(l));
+    }
+}
+
+class HexagonRegulat{
+    public double aria(int l){
+        return ((l ^ 2) * 3 * Math.sqrt(3)) / 2;
+    }
+    public int perimetrul(int l){
+        return 6 * l;
+    }
+    public void afisareHexagon(int l){
+        System.out.println("Aria hexagonului este: " + aria(l));
+        System.out.println("Perimetrul hexagonului este: " + perimetrul(l));
+    }
+}
+
+public class Matematica {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Introduceti numarul N de forme geometrice: ");
+        System.out.flush();
+        int n = 0;
+        try{
+            n = in.nextInt();
+        }
+        catch (InputMismatchException e){
+            System.out.print("Valoarea introdusa pentru n este incorecta!!!");
+            System.exit(1);
+        }
+
+        Patrat p1 = new Patrat();
+        TriunghiEchi t1 = new TriunghiEchi();
+        HexagonRegulat h1 = new HexagonRegulat();
+
+        double sumaArii = 0;
+        double sumaPerimetre = 0;
+        for(int i = 0 ; i < n ; i ++) {
+            System.out.print("\nIntroduceti valoarea laturii: ");
+            System.out.flush();
+
+            int l = 0;
+            try {
+                l = in.nextInt();
+            }
+            catch (InputMismatchException e1){
+                System.out.println("Valoarea lui l este incorecta!!! ");
+                System.exit(2);
+            }
+            //Afisarea Valorilor
+            p1.afisarePatrat(l);
+            t1.afisareTriunghi(l);
+            h1.afisareHexagon(l);
+
+            sumaArii = sumaArii + p1.aria(l) + t1.aria(l) + h1.aria(l);
+            sumaPerimetre = sumaPerimetre + p1.perimetrul(l) + t1.perimetrul(l) + h1.perimetrul(l);
+        }
+
+        System.out.println("\nSuma Ariilor formelor geometrice este: " + sumaArii);
+        System.out.println("Suma Perimetrelor formelor geometrice este: " + sumaPerimetre + "\n");
+    }
+}
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 5
+
+3. Dezvoltați o ierarhie de clase care definesc o serie de forme geometrice spațiale și un program care calculează
+cantitatea de vopsea necesară acoperirii diferitelor obiecte create.
+Ierarhia constă din clasa de bază abstractă FiguraSpatiala și clasele derivate - Sfera, Cub și Cilindru. Singurul atribut pe
+care îl are clasa de bază este numele figurii geometrice și singura metodă abstractă e cea care calculează și returnează
+aria.
+Parcurgeti urmatoarele etape:
+A. Scrieți clasa abstractă FiguraSpatiala, stocată în fișierul FiguraSpatiala.java, cu următoarele componente:
+- o variabilă denumire de tip String
+- o metodă abstractă aria()
+- o metodă toString() care returnează numele formei geometrice
+B. Fișierul Sfera.java conține clasa Sfera derivată din FiguraSpatiala. O sferă are raza drept atribut privat întreg și
+implementează corpul metodei abstracte mostenite aria().
+C. Analog se implementează clasele Cub si Cilindru, derivate de asemenea din clasa de bază FiguraSpatiala. Un cub este
+definit de variabila proprie latura în timp ce un cilindru are drept atribute raza_bazei și inaltimea.
+Nota: Fiecare din clasele derivate suprascriu metoda mostenită toString() si includ metode mutator și accesor specifice
+variabilelor proprii.
+D. Fișierul Vopsea.java conține o interfață al carei unic membru este o constantă de tip float numită
+vopseaPeUnitateaDeSuprafata.
+E. Fișierul Vopsitorie.java implementează interfața Vopsea și conține un program care calculează cantitatea de vopsea
+necesară acoperirii diferitelor forme create.
+Instanțiati fiecare din cele 3 clase create. Apelați metodele corespunzătoare pentru a seta atributele specifice cu valori
+citite de la tastatură.
+Calculați cantitatea de vopsea necesară acoperirii fiecărui obiect, ținând cont de constanta definită în interfață.
+*/
+
+//FiguraSpatiala.java
+abstract class FiguraSpatiala{
+    protected String numeFigura;
+    public abstract double ariaFigura();
+    @Override
+    public String toString(){
+        return ("\nNumele figurii este: " + numeFigura);
+    }
+}
+
+//Cub.java
+class Cub extends FiguraSpatiala{
+    private double latura;
+    @Override
+    public double ariaFigura(){
+        return 6 * latura * latura;
+    }
+    public double getLatura() {
+        return latura;
+    }
+    public void setLatura(double latura) {
+        this.latura = latura;
+    }
+
+    @Override
+    public String toString(){
+        return ("\nNumele Cubului este: " + numeFigura);
+    }
+}
+
+//Sfera.java
+class Sfera extends FiguraSpatiala{
+    private double raza;
+    @Override
+    public double ariaFigura(){
+        final double pi = 3.14;
+        return 4 * pi * raza * raza;
+    }
+    public double getRaza() {
+        return raza;
+    }
+    public void setRaza(double raza) {
+        this.raza = raza;
+    }
+    @Override
+    public String toString(){
+        return ("\nNumele Sferei este: " + numeFigura);
+    }
+}
+
+//Cilindru.java
+class Cilindru extends FiguraSpatiala{
+    private double razaBazei;
+    private double inaltimea;
+    @Override
+    public double ariaFigura() {
+        final double pi = 3.14;
+        return (2 * pi * razaBazei * inaltimea) + (2 * pi * razaBazei * razaBazei);
+    }
+    public double getRaza_bazei() {
+        return razaBazei;
+    }
+    public double getInaltimea() {
+        return inaltimea;
+    }
+    public void setRaza_bazei(double razaBazei) {
+        this.razaBazei = razaBazei;
+    }
+    public void setInaltimea(double inaltimea) {
+        this.inaltimea = inaltimea;
+    }
+
+    @Override
+    public String toString(){
+        return ("\nNumele Cilindrului este: " + numeFigura);
+    }
+}
+
+//Vopsea.java
+interface Vopsea{
+    static final float vopseaPeUnitateaDeSuprafata = 20;
+}
+
+//Vopsitorie.java
+public class Vopsitorie implements Vopsea{
+    public static void main(String[] args){
+        Cub c1 = new Cub();
+        c1.setLatura(3);
+
+        Cilindru cil1= new Cilindru();
+        cil1.setRaza_bazei(2.7);
+        cil1.setInaltimea(5.3);
+
+        Sfera s1 = new Sfera();
+        s1.setRaza(7.4);
+
+        double cantitateVopseaCub = c1.ariaFigura() * vopseaPeUnitateaDeSuprafata;
+        double cantitateVopseaCilindru = cil1.ariaFigura() * vopseaPeUnitateaDeSuprafata;
+        double cantitateVopseaSfera = s1.ariaFigura() * vopseaPeUnitateaDeSuprafata;
+
+        System.out.println("Cantitatea de vopsea necesara acoperirii suprafetei Cubului este: " + cantitateVopseaCub);
+        System.out.println("Cantitatea de vopsea necesara acoperirii suprafetei Cilindrului este: " + cantitateVopseaCilindru);
+        System.out.println("Cantitatea de vopsea necesara acoperirii suprafetei Sferei este: " + cantitateVopseaSfera);
+    }
+}
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 5
+
+4. Considerați clasa Fractie care are 2 atribute integer și protected a si b pentru numărător și numitor și câte o metodă
+accesor și mutator pentru fiecare din atributele clasei. Definiți un constructor explicit fără parametri care inițializează a cu
+0 si b cu 1, și un constructor explicit cu 2 parametri.
+Implementați o metodă numită simplifica() care simplifică fracția curentă și modifică valorile numărătorului și numitorului
+stocate în clasă. Simplificarea se bazează pe metoda int cmmdc(int,int) care determină și returnează cel mai mare divizor
+comun al valorilor primite ca parametri folosind algoritmul de împărțiri succesive.
+Suprascrieți metoda toString() pentru a returna ca String reprezentarea fracției (“a/b”).
+Definiți clasa FractieExtinsa, derivată din Fractie, care va avea un constructor cu parametri (care apelează constructorul
+din clasa de bază). Clasa va suprascrie metoda int cmmdc(int,int) și va calcula rezultatul pe baza unui algoritm de scăderi
+succesive. Clasa conține o metodă care returnează true/false dacă fracția este supraunitară sau nu.
+În metoda main() instanțiați N obiecte de tip Fractie fără parametri. Setați atributele obiectelor cu date citite de la
+tastatură. Afișați atributele obiectelor. Simplificați fracțiile și afișați rezultatele.
+Instanțiați 1 obiect de tip FractieExtinsa cu date citite de la tastatură. Simplificați fracția și afișați rezultatul. Verificați dacă
+fracția este supraunitară.
+Realizați un upcast al obiectului clasei derivate și initializați o nouă instanță a clasei de bază. Încercați să verificați dacă
+fracția este supraunitară sau nu.
+*/
+
+import java.lang.String;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+class Fractie{
+    protected int a;
+    protected int b;
+    public Fractie(){
+        a = 0;
+        b = 1;
+    }
+    public Fractie(int a, int b){
+        this.a = a;
+        this.b = b;
+    }
+    public int getA() {
+        return a;
+    }
+    public int getB() {
+        return b;
+    }
+
+    public void setA(int a) {
+        this.a = a;
+    }
+
+    public void setB(int b) {
+        this.b = b;
+    }
+
+    public void simplifica() {
+        int cmmdc = cmmdc(this.a, this.b);
+        this.a /= cmmdc;
+        this.b /= cmmdc;
+    }
+
+    public int cmmdc(int a, int b) {
+        while (b != 0) {
+            int r = a % b;
+            a = b;
+            b = r;
+        }
+        return a;
+    }
+
+    @Override
+    public String toString(){
+        return "\n" + a + "/" + b;
+    }
+
+}
+
+class FractieExtinsa extends Fractie{
+    public FractieExtinsa(int a, int b){
+        super(a, b);
+    }
+
+    @Override
+    public int cmmdc(int a, int b) {
+        while (a != b) {
+            if (a > b)
+                a -= b;
+            else
+                b -= a;
+        }
+        return a;
+    }
+
+    public boolean esteSupraunitara() {
+        return a > b;
+    }
+
+}
+
+public class MyMain{
+    public static void main(String[] args){
+        Scanner in1 = new Scanner(System.in);
+        System.out.print("Introduceti numarul de obiecte de tip Fractie: ");
+        System.out.flush();
+        int n = 0;
+
+        try {
+            n = in1.nextInt();
+        } catch (InputMismatchException e1)
+        {
+            System.out.println("Valoarea este incorecta!!! ");
+            System.exit(1);
+        }
+
+        int a = 0, b = 0;
+        Fractie[] fractii = new Fractie[n];
+
+        System.out.print("\n");
+        for(int i = 0 ; i < n ; i ++){
+            System.out.println("Introduceti valoarea lui a si a lui b: ");
+            try{
+                a = in1.nextInt();
+                b = in1.nextInt();
+            }
+            catch (InputMismatchException e2) {
+                System.out.println("Valoarea este incorecta!!! ");
+                System.exit(2);
+            }
+            fractii[i] = new Fractie();
+            fractii[i].setA(a);
+            fractii[i].setB(b);
+        }
+        for(int i = 0 ; i < n ; i ++){
+            fractii[i].simplifica();
+            System.out.print("\nValorile lui a si b sunt: " + fractii[i].toString());
+        }
+
+
+
+        //FractiaExtinsa
+        System.out.println("\nIntroduceti valorile lui a si lui b pentru FractiaExtinsa: ");
+
+        try{
+            a = in1.nextInt();
+            b = in1.nextInt();
+        }
+        catch (InputMismatchException e3) {
+            System.out.println("Valoarea este incorecta!!! ");
+            System.exit(3);
+        }
+        FractieExtinsa fex = new FractieExtinsa(a, b);
+
+        fex.simplifica();
+        System.out.println("FractiaExtinsa simplificata este: " + fex.toString());
+
+        if(fex.esteSupraunitara()){
+            System.out.println("FractiaExtinsa este supraunitara!!! ");
+        }
+        else{
+            System.out.println("FractiaExtinsa nu este supraunitara!!! ");
+        }
+
+        Fractie f1 = new Fractie();
+        f1 = fex;
+
+        //Prin obiectul din clasa de baza pot fi accesate doar campurile mostenite din clasa derivata.
+        //Astfel nu vom putea apela metoda esteSupraunitara
+    }
+}
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+/*
+Handru Radu, Grupa 2122, Laboratorul 5
+
+5. Definiți un sir de elemente de tip String. Folosind expresii lambda, ordonați-l după următoarele metode: lungime (mic-
+>mare), inversul lungimii (mare->mic), ordine alfabetică, șirurile de caractere ce încep cu litera M vor fi primele, urmate
+de restul șirurilor.
+*/
+
+import java.lang.String;
+import java.util.Arrays;
+import java.util.Comparator;
+
+public class MyMain{
+    public static void main(String[] args){
+        String[] elementeString = {"BMW", "Audi", "Mercedes", "Ferrari", "Lamborghini", "Maserati", "Masina"};
+
+        Arrays.sort(elementeString, Comparator.comparingInt(String::length));
+        System.out.println("\nElementele sortate dupa lungime (mic -> mare) sunt: " + Arrays.toString(elementeString));
+
+        Arrays.sort(elementeString, Comparator.comparingInt(String::length).reversed());
+        System.out.println("Elementele sortate dupa inversul lungimii (mic -> mare) sunt: " + Arrays.toString(elementeString));
+
+        Arrays.sort(elementeString);
+        System.out.println("Elementele sortate in ordine alfabetica sunt: " + Arrays.toString(elementeString));
+
+        Arrays.sort(elementeString, (s1, s2) -> s1.startsWith("M") ? -1 : s2.startsWith("M") ? 1 : 0);
+        System.out.println("Elementele care incep cu litera M vor fi primele : " + Arrays.toString(elementeString));
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
